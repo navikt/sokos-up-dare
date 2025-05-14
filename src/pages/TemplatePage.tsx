@@ -24,11 +24,9 @@ export default function TemplatePage() {
     <>
       <div className={styles["template-header"]}>
         <Heading spacing level="1" size="large">
-          Grensesnittmal for Utbetalingsportalen
+          Dare POC - Mikrofrontend
         </Heading>
-        <BodyLong>
-          Dette er en mal for å bygge mikrofrontend i Utbetalingsportalen
-        </BodyLong>
+        <BodyLong>Utkast for beregningsgrunnlag for AAP</BodyLong>
       </div>
 
       <div className={styles["template-body"]}>

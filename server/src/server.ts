@@ -3,13 +3,12 @@ import express, { Request, Response } from "express";
 import expressStaticGzip from "express-static-gzip";
 import path from "path";
 
-const basePath = "/sokos-mikrofrontend-template";
+const basePath = "/sokos-up-dare";
 const buildPath = path.resolve(__dirname, "../dist");
 const server = express();
 
 const corsAllowedOrigin = [
   /https:\/\/utbetalingsportalen(-[a-z][a-z0-9])?(.ansatt|.intern)(.dev)?.nav.no/,
-  "https://sokos-utbetalingsportalen-astro.intern.dev.nav.no",
   "http://localhost:5173",
 ];
 

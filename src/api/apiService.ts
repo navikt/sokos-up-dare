@@ -3,7 +3,7 @@ import { EmployeeList } from "../types/Employee";
 import { axiosFetcher } from "./config/apiConfig";
 
 const BASE_URI = {
-  BACKEND_API: "/mikrofrontend-api/api/v1",
+  BACKEND_API: "/dare-poc-api/api/v1",
 };
 
 function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {

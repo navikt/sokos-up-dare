@@ -6,7 +6,7 @@ import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import EnvironmentPlugin from "vite-plugin-environment";
 
 export default defineConfig(({ mode }) => ({
-  base: "/mikrofrontend",
+  base: "/dare",
   build: {
     rollupOptions: {
       input: resolve(__dirname, "src/App.tsx"),
@@ -26,9 +26,9 @@ export default defineConfig(({ mode }) => ({
   server: {
     proxy: {
       ...(mode === "backend" && {
-        "/mikrofrontend-api/api/v1": {
+        "/dare-poc-api/api/v1": {
           target: "http://localhost:8080",
-          rewrite: (path: string) => path.replace(/^\/oppdrag-api/, ""),
+          rewrite: (path: string) => path.replace(/^\/dare-poc-api/, ""),
           changeOrigin: true,
           secure: false,
         },
@@ -36,7 +36,7 @@ export default defineConfig(({ mode }) => ({
       ...(mode === "mock" && {
         "/mockServiceWorker.js": {
           target: "http://localhost:5173",
-          rewrite: () => "mikrofrontend/mockServiceWorker.js",
+          rewrite: () => "dare/mockServiceWorker.js",
         },
       }),
     },
