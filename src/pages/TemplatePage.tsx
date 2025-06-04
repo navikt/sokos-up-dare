@@ -5,6 +5,7 @@ import {
   Heading,
   Loader,
   Table,
+  Tooltip,
 } from "@navikt/ds-react";
 import { useGetCalculation } from "../api/apiService";
 import { Row } from "../types/Beregning";
@@ -59,9 +60,15 @@ export default function TemplatePage() {
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell scope="col">Dag</Table.HeaderCell>
-                  {calc.columnNames.map((col) => (
-                    <Table.DataCell key={col} scope="col">
-                      {col}
+                  {calc.columns.map((date) => (
+                    <Table.DataCell key={date} scope="col">
+                      <Tooltip content={`dato: ${date}`}>
+                        <span>
+                          {new Date(date).toLocaleDateString("no-NO", {
+                            weekday: "long",
+                          })}
+                        </span>
+                      </Tooltip>
                     </Table.DataCell>
                   ))}
                   <Table.DataCell align={"right"} scope="col">
@@ -78,7 +85,7 @@ export default function TemplatePage() {
                     {row.singleVal ? (
                       <Table.DataCell
                         align={"right"}
-                        colSpan={calc.columnNames.length}
+                        colSpan={calc.columns.length}
                       >
                         {row.values[0]}
                       </Table.DataCell>

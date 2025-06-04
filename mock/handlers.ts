@@ -3,19 +3,19 @@ import { HttpResponse, http } from "msw";
 export const handlers = [
   http.post("/dare-poc-api/api/v1/oppdrag", () => {
     return HttpResponse.json({
-      columnNames: [
-        "man.",
-        "tir.",
-        "ons.",
-        "tor.",
-        "fre.",
-        "lør.",
-        "søn.",
-        "man.",
-        "tir.",
-        "ons.",
-        "tor.",
-        "fre.",
+      columns: [
+        "2025-03-31",
+        "2025-04-01",
+        "2025-04-02",
+        "2025-04-03",
+        "2025-04-04",
+        "2025-04-05",
+        "2025-04-06",
+        "2025-04-07",
+        "2025-04-08",
+        "2025-04-09",
+        "2025-04-10",
+        "2025-04-11",
       ],
       rows: [
         {
