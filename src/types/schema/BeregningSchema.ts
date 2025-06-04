@@ -7,7 +7,7 @@ export const RowSchema = z.object({
 });
 
 export const BeregningSchema = z.object({
-  columnNames: z.array(z.string()),
+  columns: z.array(z.string()),
   rows: z.array(RowSchema),
   sums: RowSchema,
   sumColumn: z.array(z.number()),
