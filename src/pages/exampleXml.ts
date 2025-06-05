@@ -1,5 +1,4 @@
-export const exampleXml = `
-<oppdrag-110>
+export const exampleXml = `<oppdrag-110>
     <kodeAksjon>1</kodeAksjon>
     <kodeEndring>ENDR</kodeEndring>
     <kodeFagomraade>AAP</kodeFagomraade>
@@ -41,5 +40,4 @@ export const exampleXml = `
             <attestantId>Kelvin</attestantId>
         </attestant-180>
     </oppdrags-linje-150>
-</oppdrag-110>
-`;
+</oppdrag-110>`;

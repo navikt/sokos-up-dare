@@ -26,8 +26,8 @@ export default defineConfig(({ mode }) => ({
   server: {
     proxy: {
       ...(mode === "backend" && {
-        "/dare-poc-api/api/v1": {
-          target: "http://localhost:8080",
+        "/dare-poc-api/api/": {
+          target: "https://sokos-dare-poc.intern.dev.nav.no",
           rewrite: (path: string) => path.replace(/^\/dare-poc-api/, ""),
           changeOrigin: true,
           secure: false,

@@ -1,4 +1,4 @@
-import useSWRImmutable from "swr/immutable";
+import useSWR from "swr";
 import { Beregning } from "../types/Beregning";
 import { axiosPostFetcher } from "./config/apiConfig";
 
@@ -11,7 +11,6 @@ function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
     fetcher,
     suspense: true,
     revalidateOnFocus: false,
-    refreshInterval: 600000,
   };
 }
 
@@ -20,10 +19,10 @@ export function useGetCalculation(body: string): {
   error: string;
   isLoading: boolean;
 } {
-  const { data, error, isValidating } = useSWRImmutable<Beregning>(
-    `/oppdrag/2.5`,
-    swrConfig<Beregning>((url) =>
-      axiosPostFetcher<string, Beregning>(BASE_URI.BACKEND_API, url, body),
+  const { data, error, isValidating } = useSWR<Beregning>(
+    ["/oppdrag/2.5", body],
+    swrConfig<Beregning>(([url, b]) =>
+      axiosPostFetcher<string, Beregning>(BASE_URI.BACKEND_API, url, b),
     ),
   );
 
