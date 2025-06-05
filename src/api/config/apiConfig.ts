@@ -1,4 +1,4 @@
-import axios, { CreateAxiosDefaults } from "axios";
+import axios, { AxiosRequestConfig, CreateAxiosDefaults } from "axios";
 import { ApiError, HttpStatusCodeError } from "../../types/Error";
 
 const config = (baseUri: string): CreateAxiosDefaults => ({
@@ -42,7 +42,8 @@ export async function axiosPostFetcher<T, U>(
   baseUri: string,
   url: string,
   body?: T,
+  config?: AxiosRequestConfig,
 ) {
-  const res = await api(baseUri).post<U>(url, body);
+  const res = await api(baseUri).post<U>(url, body, config);
   return res.data;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { startTransition, useState } from "react";
 import {
   Accordion,
   BodyLong,
@@ -43,7 +43,7 @@ export default function TemplatePage() {
         >
           <Accordion>
             <Accordion.Item>
-              <Accordion.Header>XML</Accordion.Header>
+              <Accordion.Header>Oppdrag</Accordion.Header>
               <Accordion.Content>
                 <VStack>
                   <Box padding="6">
@@ -57,7 +57,12 @@ export default function TemplatePage() {
                   <HStack gap={"4"}>
                     <Button
                       variant="primary"
-                      onClick={() => setXmlData(textAreaData)}
+                      disabled={textAreaData === xmlData}
+                      onClick={() => {
+                        startTransition(() => {
+                          setXmlData(textAreaData);
+                        });
+                      }}
                     >
                       Post
                     </Button>
@@ -87,7 +92,7 @@ const Beregning: React.FC<{ xml: string }> = ({ xml }) => {
   return (
     calc && (
       <Box padding={{ xs: "2", md: "6" }}>
-        <Table key={"Beregning"}>
+        <Table id="beregningstabell" key={xml} className={"fade-in"}>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell scope="col">Dag</Table.HeaderCell>

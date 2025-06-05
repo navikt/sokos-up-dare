@@ -25,3 +25,17 @@ body {
 main {
   width: 100%;
 }
+
+.fade-in {
+  animation: fade-in-keyframes 300ms ease-in;
+}
+
+@keyframes fade-in-keyframes {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
