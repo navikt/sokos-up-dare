@@ -3,7 +3,7 @@ import { Beregning } from "../types/Beregning";
 import { axiosPostFetcher } from "./config/apiConfig";
 
 const BASE_URI = {
-  BACKEND_API: "/dare-poc-api/api/v1",
+  BACKEND_API: "/dare-poc-api/api/",
 };
 
 function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
