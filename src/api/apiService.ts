@@ -22,7 +22,9 @@ export function useGetCalculation(body: string): {
   const { data, error, isValidating } = useSWR<Beregning>(
     ["/oppdrag/2.5", body],
     swrConfig<Beregning>(([url, b]) =>
-      axiosPostFetcher<string, Beregning>(BASE_URI.BACKEND_API, url, b),
+      axiosPostFetcher<string, Beregning>(BASE_URI.BACKEND_API, url, b, {
+        headers: { "Content-Type": "text/xml" },
+      }),
     ),
   );
 
