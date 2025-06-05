@@ -15,11 +15,15 @@ function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
   };
 }
 
-export function useGetCalculation() {
+export function useGetCalculation(body: string): {
+  data?: Beregning;
+  error: string;
+  isLoading: boolean;
+} {
   const { data, error, isValidating } = useSWRImmutable<Beregning>(
-    `/oppdrag`,
+    `/oppdrag/2.5`,
     swrConfig<Beregning>((url) =>
-      axiosPostFetcher<string, Beregning>(BASE_URI.BACKEND_API, url),
+      axiosPostFetcher<string, Beregning>(BASE_URI.BACKEND_API, url, body),
     ),
   );
 
