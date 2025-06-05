@@ -3,7 +3,7 @@ import { Beregning } from "../types/Beregning";
 import { axiosPostFetcher } from "./config/apiConfig";
 
 const BASE_URI = {
-  BACKEND_API: "/dare-poc-api/api/v1",
+  BACKEND_API: "/dare-poc-api/api/",
 };
 
 function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
@@ -15,11 +15,15 @@ function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
   };
 }
 
-export function useGetCalculation() {
+export function useGetCalculation(body: string): {
+  data?: Beregning;
+  error: string;
+  isLoading: boolean;
+} {
   const { data, error, isValidating } = useSWRImmutable<Beregning>(
-    `/oppdrag`,
+    `/oppdrag/2.5`,
     swrConfig<Beregning>((url) =>
-      axiosPostFetcher<string, Beregning>(BASE_URI.BACKEND_API, url),
+      axiosPostFetcher<string, Beregning>(BASE_URI.BACKEND_API, url, body),
     ),
   );
 

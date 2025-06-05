@@ -1,0 +1,45 @@
+export const exampleXml = `
+<oppdrag-110>
+    <kodeAksjon>1</kodeAksjon>
+    <kodeEndring>ENDR</kodeEndring>
+    <kodeFagomraade>AAP</kodeFagomraade>
+    <fagsystemId>4Mi993K</fagsystemId>
+    <utbetFrekvens>MND</utbetFrekvens>
+    <oppdragGjelderId>23519035766</oppdragGjelderId>
+    <datoOppdragGjelderFom>2000-01-01+01:00</datoOppdragGjelderFom>
+    <saksbehId>Kelvin</saksbehId>
+    <avstemming-115>
+        <kodeKomponent>AAP</kodeKomponent>
+        <nokkelAvstemming>Bedw2zEBRPud7wzaOrd7AQ==</nokkelAvstemming>
+        <tidspktMelding>2025-04-22-00.00.00.000000</tidspktMelding>
+    </avstemming-115>
+    <oppdrags-enhet-120>
+        <typeEnhet>BOS</typeEnhet>
+        <enhet>8020</enhet>
+        <datoEnhetFom>1970-01-01+01:00</datoEnhetFom>
+    </oppdrags-enhet-120>
+    <oppdrags-linje-150>
+        <kodeEndringLinje>NY</kodeEndringLinje>
+        <vedtakId>2025-04-16</vedtakId>
+        <delytelseId>lZGWmiVzR0q4W52S++5nPQ==</delytelseId>
+        <kodeKlassifik>AAPUAA</kodeKlassifik>
+        <datoVedtakFom>2025-03-31+02:00</datoVedtakFom>
+        <datoVedtakTom>2025-04-11+02:00</datoVedtakTom>
+        <sats>974</sats>
+        <fradragTillegg>T</fradragTillegg>
+        <typeSats>DAG</typeSats>
+        <brukKjoreplan>N</brukKjoreplan>
+        <saksbehId>Kelvin</saksbehId>
+        <utbetalesTilId>23519035766</utbetalesTilId>
+        <henvisning>fElbky3XRjik9hEWF9/N4w==</henvisning>
+        <refFagsystemId>4Mi993K</refFagsystemId>
+        <refDelytelseId>l+Zwfa15Q52nLauwP2CI1Q==</refDelytelseId>
+        <vedtakssats-157>
+            <vedtakssats>974</vedtakssats>
+        </vedtakssats-157>
+        <attestant-180>
+            <attestantId>Kelvin</attestantId>
+        </attestant-180>
+    </oppdrags-linje-150>
+</oppdrag-110>
+`;
