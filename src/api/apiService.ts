@@ -1,4 +1,4 @@
-import useSWR from "swr";
+import { DateRange } from "@navikt/ds-react/src/date/Date.typeutils";
 import { Beregning } from "../types/Beregning";
 import { axiosPostFetcher } from "./config/apiConfig";
 
@@ -6,28 +6,27 @@ const BASE_URI = {
   BACKEND_API: "/dare-poc-api/api/",
 };
 
-function swrConfig<T>(fetcher: (uri: string) => Promise<T>) {
-  return {
-    fetcher,
-    suspense: true,
-    revalidateOnFocus: false,
-  };
-}
+const formatDate = (d: Date | undefined) =>
+  d &&
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
-export function useGetCalculation(body: string): {
-  data?: Beregning;
-  error: string;
-  isLoading: boolean;
-} {
-  const { data, error, isValidating } = useSWR<Beregning>(
-    ["/oppdrag/2.5", body],
-    swrConfig<Beregning>(([url, b]) =>
-      axiosPostFetcher<string, Beregning>(BASE_URI.BACKEND_API, url, b, {
-        headers: { "Content-Type": "text/xml" },
-      }),
-    ),
+const locale = navigator.languages?.[0] || navigator.language;
+
+export async function getCalculation(
+  xmlBody: string,
+  range?: DateRange,
+): Promise<Beregning> {
+  return await axiosPostFetcher<string, Beregning>(
+    BASE_URI.BACKEND_API,
+    "/oppdrag/2.5",
+    xmlBody,
+    {
+      headers: {
+        "Content-Type": "text/xml",
+        "Accept-Language": locale,
+        ...(range?.from && { "X-dateRange-from": formatDate(range.from) }),
+        ...(range?.to && { "X-dateRange-to": formatDate(range.to) }),
+      },
+    },
   );
-
-  const isLoading = (!error && !data) || isValidating;
-  return { data, error, isLoading };
 }
