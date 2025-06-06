@@ -53,7 +53,7 @@ Templaten har ikke routing. Men om du ønsker å ha routing gjør du følgende:
 2. Erstatter følgende innhold i [App.tsx](/src/App.tsx)
 
 ```typescript
-return <TemplatePage />;
+return <Beregne />;
 ```
 
 med
@@ -62,7 +62,7 @@ med
 return <BrowserRouter basename="/mikrofrontend">
     <Routes>
       <Route path={"/"} ErrorBoundary={ErrorBoundary}>
-        <Route path="/" element={<TemplatePage />} />
+        <Route path="/" element={<Beregne />} />
         <Route path="/anotherpage" element={<AnotherPage />} />
       </Route>
     </Routes>
