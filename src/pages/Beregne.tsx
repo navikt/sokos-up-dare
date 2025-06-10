@@ -1,9 +1,11 @@
 import React, { startTransition, useState } from "react";
 import {
   Accordion,
+  Alert,
   BodyLong,
   Box,
   Button,
+  DatePicker,
   HStack,
   Heading,
   Loader,
@@ -11,23 +13,39 @@ import {
   Textarea,
   Tooltip,
   VStack,
+  useRangeDatepicker,
 } from "@navikt/ds-react";
-import { useGetCalculation } from "../api/apiService";
-import { Row } from "../types/Beregning";
+import { getCalculation } from "../api/apiService";
+import { Beregning, Row } from "../types/Beregning";
+import { FetchState } from "../types/FetchState";
 import styles from "./TemplatePage.module.css";
 import { exampleXml } from "./exampleXml";
 
-export default function TemplatePage() {
+export default function Beregne() {
   const [textAreaData, setTextArea] = useState<string>(exampleXml);
-  const [xmlData, setXmlData] = useState<string>(exampleXml);
+  const [xmlData, setXmlData] = useState<string>("");
+  const [state, setState] = useState<FetchState<Beregning>>({ status: "idle" });
+  const { datepickerProps, toInputProps, fromInputProps, selectedRange } =
+    useRangeDatepicker({
+      defaultSelected: {
+        from: new Date("2025-03-31"),
+        to: new Date("2025-04-11"),
+      },
+    });
+
+  const handleSubmit = async () => {
+    setState({ status: "loading" });
+    try {
+      const result = await getCalculation(xmlData, selectedRange);
+      setState({ status: "success", data: result });
+    } catch (err) {
+      setState({ status: "error", error: (err as Error).message });
+    }
+  };
 
   return (
     <>
       <div className={styles["template-body"]}>
-        <Heading spacing level="2" size="medium">
-          Beregning
-        </Heading>
-
         <div className={styles["template-header"]}>
           <Heading spacing level="1" size="large">
             Dare POC - Mikrofrontend
@@ -54,45 +72,69 @@ export default function TemplatePage() {
                       onChange={(e) => setTextArea(e.target.value)}
                     />
                   </Box>
-                  <HStack gap={"4"}>
-                    <Button
-                      variant="primary"
-                      disabled={textAreaData === xmlData}
-                      onClick={() => {
-                        startTransition(() => {
-                          setXmlData(textAreaData);
-                        });
-                      }}
-                    >
-                      Post
-                    </Button>
-                  </HStack>
                 </VStack>
               </Accordion.Content>
             </Accordion.Item>
           </Accordion>
+
+          <Box padding="2">
+            <HStack gap={"4"}>
+              <VStack padding={"1"}>
+                <Heading size={"small"}>Beregningsperiode:</Heading>
+                <DatePicker {...datepickerProps}>
+                  <HStack wrap gap="4" justify="center">
+                    <DatePicker.Input
+                      {...fromInputProps}
+                      label="Fra"
+                      size="small"
+                    />
+                    <DatePicker.Input
+                      {...toInputProps}
+                      label="Til"
+                      size="small"
+                    />
+                  </HStack>
+                </DatePicker>
+              </VStack>
+              <VStack justify={"end"}>
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    startTransition(() => {
+                      setXmlData(textAreaData);
+                      handleSubmit();
+                    });
+                  }}
+                >
+                  Send oppdrag
+                </Button>
+              </VStack>
+            </HStack>
+          </Box>
         </Box>
-        <Beregning xml={xmlData} />
+        {state.status === "loading" && (
+          <div className={styles.loader}>
+            <Loader size="3xlarge" title="Henter data..." />
+          </div>
+        )}
+        {state.status === "error" && (
+          <Alert variant={"error"}> Noe gikk galt: {state.error} </Alert>
+        )}
+        {state.status === "success" && <BeregningsTabell calc={state.data} />}
       </div>
     </>
   );
 }
 
-const Beregning: React.FC<{ xml: string }> = ({ xml }) => {
-  const { data: calc, isLoading } = useGetCalculation(xml);
-
-  if (isLoading) {
-    return (
-      <div className={styles.loader}>
-        <Loader size="3xlarge" title="Henter data..." />
-      </div>
-    );
-  }
-
+const BeregningsTabell: React.FC<{ calc: Beregning }> = ({ calc }) => {
   return (
     calc && (
       <Box padding={{ xs: "2", md: "6" }}>
-        <Table id="beregningstabell" key={xml} className={"fade-in"}>
+        <Table
+          id="beregningstabell"
+          key={JSON.stringify(calc)}
+          className={"fade-in"}
+        >
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell scope="col">Dag</Table.HeaderCell>
