@@ -23,7 +23,6 @@ import { exampleXml } from "./exampleXml";
 
 export default function Beregne() {
   const [textAreaData, setTextArea] = useState<string>(exampleXml);
-  const [xmlData, setXmlData] = useState<string>("");
   const [state, setState] = useState<FetchState<Beregning>>({ status: "idle" });
   const { datepickerProps, toInputProps, fromInputProps, selectedRange } =
     useRangeDatepicker({
@@ -33,7 +32,7 @@ export default function Beregne() {
       },
     });
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (xmlData: string) => {
     setState({ status: "loading" });
     try {
       const result = await getCalculation(xmlData, selectedRange);
@@ -101,8 +100,7 @@ export default function Beregne() {
                   variant="primary"
                   onClick={() => {
                     startTransition(() => {
-                      setXmlData(textAreaData);
-                      handleSubmit();
+                      handleSubmit(textAreaData);
                     });
                   }}
                 >
