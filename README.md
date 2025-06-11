@@ -28,7 +28,8 @@ NB! Navngi følgende: `sokos-up-appNavn`, f.eks: `sokos-up-venteregister`
 4. Start appen med to følgende måter:
 
 - Mot [Mock Service Worker](https://mswjs.io/) mock server -> `pnpm run dev`
-- Mot en backend kjørende lokalt på maskinen `pnpm run dev:backend`
+- Mot en backend kjørende i dev -> `pnpm run dev:backend`
+- Mot en backend kjørende lokalt på maskinen -> `pnpm run dev:localbackend`
   - Gå til [vite.config.ts](/vite.config.ts), endre til riktig url som skal gå mot backend.
 
 ```javascript
