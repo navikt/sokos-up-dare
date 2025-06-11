@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --mode mock",
     "dev:backend": "vite --mode backend",
+    "dev:local": "vite --mode localbackend",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
