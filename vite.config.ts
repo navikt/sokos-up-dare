@@ -33,6 +33,14 @@ export default defineConfig(({ mode }) => ({
           secure: false,
         },
       }),
+      ...(mode === "localbackend" && {
+        "/dare-poc-api/api/": {
+          target: "http://localhost:8080/",
+          rewrite: (path: string) => path.replace(/^\/dare-poc-api/, ""),
+          changeOrigin: true,
+          secure: false,
+        },
+      }),
       ...(mode === "mock" && {
         "/mockServiceWorker.js": {
           target: "http://localhost:5173",
