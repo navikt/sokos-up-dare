@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { JSX, useEffect } from "react";
 import { BrowserRouter, Route, Routes, useRouteError } from "react-router";
 import Beregne from "./pages/Beregne";
 import { Oppdrag } from "./pages/Oppdrag";
