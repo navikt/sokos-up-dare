@@ -98,6 +98,7 @@ export default function Beregne() {
               <VStack justify={"end"}>
                 <Button
                   variant="primary"
+                  disabled={state.status == "loading"}
                   onClick={() => {
                     startTransition(() => {
                       handleSubmit(textAreaData);
@@ -157,9 +158,10 @@ const BeregningsTabell: React.FC<{ calc: Beregning }> = ({ calc }) => {
               <Table.Row key={row.rowName}>
                 <Table.HeaderCell scope="row">{row.rowName}</Table.HeaderCell>
                 {row.singleVal ? (
-                  <Table.DataCell align={"right"} colSpan={calc.columns.length}>
-                    {row.values[0]}
-                  </Table.DataCell>
+                  <Table.DataCell
+                    align={"right"}
+                    colSpan={calc.columns.length}
+                  ></Table.DataCell>
                 ) : (
                   row.values.map((n: number, i: number) => (
                     <Table.DataCell align={"right"} key={`row${i}`}>

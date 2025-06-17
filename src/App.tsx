@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+import { BrowserRouter, Route, Routes } from "react-router";
 import Beregne from "./pages/Beregne";
+import { Oppdrag } from "./pages/Oppdrag";
 import { initGrafanaFaro } from "./util/grafanaFaro";
 
 export default function App() {
@@ -8,5 +10,12 @@ export default function App() {
       initGrafanaFaro();
   }, []);
 
-  return <Beregne />;
+  return (
+    <BrowserRouter basename={"/"}>
+      <Routes>
+        <Route path={"/dare/"} element={<Beregne />} />
+        <Route path={"/dare/form"} element={<Oppdrag />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
