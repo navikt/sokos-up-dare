@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes, useRouteError } from "react-router";
 import Beregne from "./pages/Beregne";
 import { Oppdrag } from "./pages/Oppdrag";
 import { initGrafanaFaro } from "./util/grafanaFaro";
@@ -11,11 +11,17 @@ export default function App() {
   }, []);
 
   return (
-    <BrowserRouter basename={"/"}>
+    <BrowserRouter basename={"/dare-poc"}>
       <Routes>
-        <Route path={"/dare/"} element={<Beregne />} />
-        <Route path={"/dare/form"} element={<Oppdrag />} />
+        <Route path={"/"} ErrorBoundary={ErrorBoundary}>
+          <Route path={"/"} element={<Beregne />} />
+          <Route path={"/form"} element={<Oppdrag />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
+}
+
+function ErrorBoundary(): JSX.Element {
+  throw useRouteError();
 }
