@@ -11,7 +11,7 @@ export default function App() {
   }, []);
 
   return (
-    <BrowserRouter basename={"/dare-poc"}>
+    <BrowserRouter basename={"/dare"}>
       <Routes>
         <Route path={"/"} ErrorBoundary={ErrorBoundary}>
           <Route path={"/"} element={<Beregne />} />
