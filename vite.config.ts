@@ -6,7 +6,7 @@ import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import EnvironmentPlugin from "vite-plugin-environment";
 
 export default defineConfig(({ mode }) => ({
-  base: "/dare-poc",
+  base: "/dare",
   build: {
     rollupOptions: {
       input: resolve(__dirname, "src/App.tsx"),
