@@ -39,3 +39,21 @@ main {
     opacity: 1;
   }
 }
+
+.bump {
+  animation: bump 300ms ease;
+}
+
+@keyframes bump {
+  0% {
+    transform: translateY(0);
+  }
+
+  30% {
+    transform: translateY(-4px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
