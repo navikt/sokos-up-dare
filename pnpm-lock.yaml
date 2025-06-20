@@ -25,6 +25,12 @@ importers:
       axios:
         specifier: ^1.10.0
         version: 1.10.0
+      luxon:
+        specifier: ^3.6.1
+        version: 3.6.1
+      lz-string:
+        specifier: ^1.5.0
+        version: 1.5.0
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -59,6 +65,9 @@ importers:
       "@trivago/prettier-plugin-sort-imports":
         specifier: ^5.2.2
         version: 5.2.2(prettier@3.5.3)
+      "@types/luxon":
+        specifier: ^3.6.2
+        version: 3.6.2
       "@types/node":
         specifier: ^22.15.30
         version: 22.15.30
@@ -1395,6 +1404,12 @@ packages:
     resolution:
       {
         integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==,
+      }
+
+  "@types/luxon@3.6.2":
+    resolution:
+      {
+        integrity: sha512-R/BdP7OxEMc44l2Ex5lSXHoIXTB2JLNa3y2QISIbr58U/YcsffyQrYW//hZSdrfxrjRZj3GcUoxMPGdO8gSYuw==,
       }
 
   "@types/node@22.15.30":
@@ -3452,6 +3467,20 @@ packages:
       {
         integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==,
       }
+
+  luxon@3.6.1:
+    resolution:
+      {
+        integrity: sha512-tJLxrKJhO2ukZ5z0gyjY1zPh3Rh88Ej9P7jNrZiHMUXHae1yvI2imgOZtL1TO8TW6biMMKfTtAOoEJANgtWBMQ==,
+      }
+    engines: { node: ">=12" }
+
+  lz-string@1.5.0:
+    resolution:
+      {
+        integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==,
+      }
+    hasBin: true
 
   magic-string@0.30.17:
     resolution:
@@ -5691,6 +5720,8 @@ snapshots:
 
   "@types/json-schema@7.0.15": {}
 
+  "@types/luxon@3.6.2": {}
+
   "@types/node@22.15.30":
     dependencies:
       undici-types: 6.21.0
@@ -7037,6 +7068,10 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
+
+  luxon@3.6.1: {}
+
+  lz-string@1.5.0: {}
 
   magic-string@0.30.17:
     dependencies:
