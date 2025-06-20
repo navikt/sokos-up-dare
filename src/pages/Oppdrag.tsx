@@ -45,7 +45,7 @@ const initialState: Oppdragsbeskrivelse = {
     prosentSats: "36,9",
     tabellNummer: "8010",
   },
-  datoVedtakFom: "2025-03-27",
+  datoVedtakFom: "2025-03-31",
   datoVedtakTom: "2025-04-11",
 };
 
