@@ -33,6 +33,7 @@ import { FetchState } from "../types/FetchState";
 import { Oppdragsbeskrivelse } from "../types/Oppdragsbeskrivelse";
 import { Skattetrekk } from "../types/Skattetrekk";
 import { Testberegning } from "../types/Testberegning";
+import { formatXmlDate } from "../util/date";
 import { fillTemplate, flattenObject } from "../util/template";
 import styles from "./TemplatePage.module.css";
 
@@ -92,7 +93,12 @@ export const Oppdrag = () => {
   });
 
   const filledTemplate = (): string => {
-    return fillTemplate(oppdragsXmlTemplate, flattenObject(formData));
+    const templateParams = {
+      ...flattenObject(formData),
+      datoVedtakFom: formatXmlDate(formData.datoVedtakFom),
+      datoVedtakTom: formatXmlDate(formData.datoVedtakTom),
+    };
+    return fillTemplate(oppdragsXmlTemplate, templateParams);
   };
 
   useEffect(() => {
