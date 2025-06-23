@@ -9,6 +9,7 @@ import {
   DownloadIcon,
   FileIcon,
   FilesIcon,
+  TestFlaskIcon,
 } from "@navikt/aksel-icons";
 import {
   Alert,
@@ -122,7 +123,7 @@ export const Oppdrag = () => {
       <div className={styles["template-body"]}>
         <div className={styles["template-header"]}>
           <Heading spacing level="1" size="large">
-            Oppdragstester.
+            Oppdragstester <TestFlaskIcon title="Oppdragstester" />
           </Heading>
         </div>
         <VStack gap="2">
@@ -204,7 +205,7 @@ export const Oppdrag = () => {
         <VStack gap={"4"}>
           <Box />
           <HStack justify={"space-between"}>
-            <HStack gap="2">
+            <HStack gap="2" className={"knapperad"}>
               <Button
                 variant="primary"
                 disabled={state.status == "loading"}
