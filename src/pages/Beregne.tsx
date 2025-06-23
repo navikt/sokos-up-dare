@@ -1,4 +1,5 @@
 import React, { startTransition, useState } from "react";
+import { TestFlaskIcon } from "@navikt/aksel-icons";
 import {
   Accordion,
   Alert,
@@ -8,6 +9,7 @@ import {
   DatePicker,
   HStack,
   Heading,
+  Link,
   Loader,
   Textarea,
   VStack,
@@ -50,7 +52,6 @@ export default function Beregne() {
           </Heading>
           <BodyLong>Utkast for beregningsgrunnlag for AAP</BodyLong>
         </div>
-
         <Box
           padding="6"
           borderRadius="xlarge"
@@ -119,6 +120,14 @@ export default function Beregne() {
           <Alert variant={"error"}> Noe gikk galt: {state.error} </Alert>
         )}
         {state.status === "success" && <BeregningsTabell calc={state.data} />}
+      </div>
+
+      <div className={styles["template-body"]}>
+        Prøv også:{" "}
+        <Link href="/dare/form" className={"dare-link"}>
+          Oppdragstester
+          <TestFlaskIcon style={{ color: "black" }} title="Oppdragstester" />
+        </Link>{" "}
       </div>
     </>
   );

@@ -57,3 +57,14 @@ main {
     transform: translateY(0);
   }
 }
+
+/* Overrides av design-systemet inntil Aksel får endret fargevalgene sine
+ * (se https://nav-it.slack.com/archives/C04V4MVULUA/p1727790124966869) */
+.dare-link {
+  color: #0060b8;
+}
+
+.knapperad {
+  --ac-button-primary-bg: #0060b8;
+  --ac-button-secondary-text: #0060b8;
+}
