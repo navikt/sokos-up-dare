@@ -20,6 +20,7 @@ import BeregningsTabell from "../components/BeregningsTabell";
 import { exampleXml } from "../data/exampleXml";
 import { Beregning } from "../types/Beregning";
 import { FetchState } from "../types/FetchState";
+import { BeregningSchema } from "../types/schema/BeregningSchema";
 import styles from "./TemplatePage.module.css";
 
 export default function Beregne() {
@@ -37,7 +38,14 @@ export default function Beregne() {
     setState({ status: "loading" });
     try {
       const result = await getCalculation(xmlData, selectedRange);
-      setState({ status: "success", data: result });
+      const response = BeregningSchema.safeParse(result);
+      if (!response.success) {
+        console.log("Error parsing ", response.error); // eslint-disable-line no-console
+        setState({ status: "error", error: "Feil i resultat" });
+      } else {
+        const beregning = BeregningSchema.parse(response.data);
+        setState({ status: "success", data: beregning });
+      }
     } catch (err) {
       setState({ status: "error", error: (err as Error).message });
     }
@@ -120,14 +128,14 @@ export default function Beregne() {
           <Alert variant={"error"}> Noe gikk galt: {state.error} </Alert>
         )}
         {state.status === "success" && <BeregningsTabell calc={state.data} />}
-      </div>
 
-      <div className={styles["template-body"]}>
-        Prøv også:{" "}
-        <Link href="/dare/form" className={"dare-link"}>
-          Oppdragstester
-          <TestFlaskIcon style={{ color: "black" }} title="Oppdragstester" />
-        </Link>{" "}
+        <Box>
+          Prøv også:{" "}
+          <Link href="/dare/form" className={"dare-link"}>
+            Oppdragstester
+            <TestFlaskIcon style={{ color: "black" }} title="Oppdragstester" />
+          </Link>{" "}
+        </Box>
       </div>
     </>
   );
