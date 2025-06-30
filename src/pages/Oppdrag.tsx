@@ -34,6 +34,7 @@ import { FetchState } from "../types/FetchState";
 import { Oppdragsbeskrivelse } from "../types/Oppdragsbeskrivelse";
 import { Skattetrekk } from "../types/Skattetrekk";
 import { Testberegning } from "../types/Testberegning";
+import { BeregningSchema } from "../types/schema/BeregningSchema";
 import { formatXmlDate } from "../util/date";
 import { fillTemplate, flattenObject } from "../util/template";
 import styles from "./TemplatePage.module.css";
@@ -72,7 +73,14 @@ export const Oppdrag = () => {
         to: new Date(formData.datoVedtakTom),
       };
       const result = await testCalculation(testberegning, range);
-      setState({ status: "success", data: result });
+      const response = BeregningSchema.safeParse(result);
+      if (!response.success) {
+        console.log("Error parsing ", response.error); // eslint-disable-line no-console
+        setState({ status: "error", error: "Feil i resultat" });
+      } else {
+        const beregning = BeregningSchema.parse(response.data);
+        setState({ status: "success", data: beregning });
+      }
     } catch (err) {
       setState({ status: "error", error: (err as Error).message });
     }
@@ -259,12 +267,16 @@ export const Oppdrag = () => {
                   setCopying(true);
                   setTimeout(() => setCopying(false), 400);
                 }}
+                iconPosition={"right"}
+                icon={
+                  copying ? (
+                    <CheckmarkIcon className={"bump"} aria-hidden />
+                  ) : (
+                    <FilesIcon aria-hidden />
+                  )
+                }
               >
-                {copying ? (
-                  <CheckmarkIcon className={"bump"} fontSize="1.5rem" />
-                ) : (
-                  <FilesIcon title="Kopiér" fontSize="1.5rem" />
-                )}
+                Kopiér
               </Button>
             </HStack>
           </HStack>
