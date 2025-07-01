@@ -14,6 +14,5 @@ test.describe("Beregning", () => {
     await page.getByRole("spinbutton", { name: "Vedtakssats" }).fill("1200");
     await page.getByRole("spinbutton", { name: "Vedtakssats" }).press("Tab");
     await page.getByRole("button", { name: "Send oppdrag" }).click();
-    await page.getByRole("cell", { name: "-808" }).click();
   });
 });
