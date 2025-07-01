@@ -24,7 +24,7 @@ import {
   VStack,
 } from "@navikt/ds-react";
 import { DateRange } from "@navikt/ds-react/src/date/Date.typeutils";
-import { testCalculation } from "../api/apiService";
+import { postOppdrag } from "../api/apiService";
 import BeregningsTabell from "../components/BeregningsTabell";
 import DatoFelt from "../components/DatoFelt";
 import SkattekortForm from "../components/SkattekortForm";
@@ -34,7 +34,6 @@ import { FetchState } from "../types/FetchState";
 import { Oppdragsbeskrivelse } from "../types/Oppdragsbeskrivelse";
 import { Skattetrekk } from "../types/Skattetrekk";
 import { Testberegning } from "../types/Testberegning";
-import { BeregningSchema } from "../types/schema/BeregningSchema";
 import { formatXmlDate } from "../util/date";
 import { fillTemplate, flattenObject } from "../util/template";
 import styles from "./TemplatePage.module.css";
@@ -59,31 +58,18 @@ export const Oppdrag = () => {
   const [copying, setCopying] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<string>("");
 
-  const handleSubmit = async () => {
-    setState({ status: "loading" });
-    try {
-      const oppdragsXml = filledTemplate();
-      const testberegning: Testberegning = {
-        oppdragsXmlVersjon: "2.5",
-        oppdragsXml: oppdragsXml,
-        ...formData.skattekort,
-      };
-      const range: DateRange = {
-        from: new Date(formData.datoVedtakFom),
-        to: new Date(formData.datoVedtakTom),
-      };
-      const result = await testCalculation(testberegning, range);
-      const response = BeregningSchema.safeParse(result);
-      if (!response.success) {
-        console.log("Error parsing ", response.error); // eslint-disable-line no-console
-        setState({ status: "error", error: "Feil i resultat" });
-      } else {
-        const beregning = BeregningSchema.parse(response.data);
-        setState({ status: "success", data: beregning });
-      }
-    } catch (err) {
-      setState({ status: "error", error: (err as Error).message });
-    }
+  const handleSubmit = () => {
+    const oppdragsXml = filledTemplate();
+    const testberegning: Testberegning = {
+      oppdragsXmlVersjon: "2.5",
+      oppdragsXml: oppdragsXml,
+      ...formData.skattekort,
+    };
+    const range: DateRange = {
+      from: new Date(formData.datoVedtakFom),
+      to: new Date(formData.datoVedtakTom),
+    };
+    postOppdrag(setState, testberegning, range);
   };
 
   const [formData, setFormData] = useState<Oppdragsbeskrivelse>(() => {
@@ -131,7 +117,10 @@ export const Oppdrag = () => {
       <div className={styles["template-body"]}>
         <div className={styles["template-header"]}>
           <Heading spacing level="1" size="large">
-            Oppdragstester <TestFlaskIcon title="Oppdragstester" />
+            <HStack justify={"center"} align={"center"} gap={"1"}>
+              Oppdragstester
+              <TestFlaskIcon title="Oppdragstester" />
+            </HStack>
           </Heading>
         </div>
         <VStack gap="2">

@@ -15,12 +15,12 @@ import {
   VStack,
   useRangeDatepicker,
 } from "@navikt/ds-react";
-import { getCalculation } from "../api/apiService";
+import { postOppdrag } from "../api/apiService";
 import BeregningsTabell from "../components/BeregningsTabell";
 import { exampleXml } from "../data/exampleXml";
 import { Beregning } from "../types/Beregning";
 import { FetchState } from "../types/FetchState";
-import { BeregningSchema } from "../types/schema/BeregningSchema";
+import { Testberegning } from "../types/Testberegning";
 import styles from "./TemplatePage.module.css";
 
 export default function Beregne() {
@@ -34,21 +34,14 @@ export default function Beregne() {
       },
     });
 
-  const handleSubmit = async (xmlData: string) => {
-    setState({ status: "loading" });
-    try {
-      const result = await getCalculation(xmlData, selectedRange);
-      const response = BeregningSchema.safeParse(result);
-      if (!response.success) {
-        console.log("Error parsing ", response.error); // eslint-disable-line no-console
-        setState({ status: "error", error: "Feil i resultat" });
-      } else {
-        const beregning = BeregningSchema.parse(response.data);
-        setState({ status: "success", data: beregning });
-      }
-    } catch (err) {
-      setState({ status: "error", error: (err as Error).message });
-    }
+  const handleSubmit = (xmlData: string) => {
+    const testOppdrag: Testberegning = {
+      oppdragsXmlVersjon: "2.5",
+      oppdragsXml: xmlData,
+      skattetrekkType: "prosenttrekk",
+      prosentSats: "50",
+    };
+    postOppdrag(setState, testOppdrag, selectedRange);
   };
 
   return (
