@@ -4,9 +4,9 @@ export const ExtraInfoReasonSchema = z.enum(["TIDLIGERE_UTBETALT"]);
 
 export const ExtraInfoTypes = {
   OverstyrtSkatteKort:
-    "no.nav.sokos.dare.poc.domain.OverstyrtSkatteKortExtraInfo",
-  ProsentExtraInfo: "no.nav.sokos.dare.poc.domain.ProsentExtraInfo",
-  TabellExtraInfo: "no.nav.sokos.dare.poc.domain.TabellExtraInfo",
+    "no.nav.sokos.dare.poc.beregning.OverstyrtSkatteKortExtraInfo",
+  ProsentExtraInfo: "no.nav.sokos.dare.poc.beregning.ProsentExtraInfo",
+  TabellExtraInfo: "no.nav.sokos.dare.poc.beregning.TabellExtraInfo",
 };
 
 export const SkatteTrekkTypes = {
