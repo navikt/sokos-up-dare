@@ -4,6 +4,14 @@ test.describe("Beregning", () => {
   test("Enkel beregning tabelltrekk 8130", async ({ page }) => {
     await page.goto("http://localhost:5173/dare/form", { waitUntil: "load" });
     await page.waitForURL("**/dare/form");
+
+    await page.waitForTimeout(5000);
+
+    await page.locator("#select-rj").screenshot({ path: "select-rj.png" });
+    const html = await page.content();
+    // eslint-disable-next-line no-console
+    console.log(html);
+
     await page.waitForSelector("#select-rj", {
       state: "visible",
       timeout: 10000,
