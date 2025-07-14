@@ -1,11 +1,10 @@
-import { expect, test } from "@playwright/test";
+import { test } from "@playwright/test";
 
 test.describe("Beregning", () => {
   test("Enkel beregning tabelltrekk 8130", async ({ page }) => {
     await page.goto("http://localhost:5173/dare/form");
+    await page.waitForSelector("#select-rj", { state: "visible" });
     const select = page.locator("#select-rj");
-    await expect(select).toBeVisible();
-    await expect(select).toBeEnabled(); // Optional but informative
     await select.selectOption("8130");
 
     await page.getByRole("spinbutton", { name: "Sats", exact: true }).click();
