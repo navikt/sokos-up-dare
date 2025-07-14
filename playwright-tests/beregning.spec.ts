@@ -5,8 +5,8 @@ test.describe("Beregning", () => {
     await page.goto("/dare/form", { waitUntil: "load" });
     await page.waitForLoadState("networkidle");
 
-    //const select = page.locator("#select-rj");
-    //await select.selectOption("8130");
+    const select = page.locator("#skatteTabell");
+    await select.selectOption("8130");
 
     await page.getByRole("spinbutton", { name: "Sats", exact: true }).click();
     await page
