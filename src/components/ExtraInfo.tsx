@@ -98,7 +98,9 @@ const ExtraInfoTable: React.FC<
   );
 };
 
-export const ExtraInfoIcon: React.FC<{ data: ExtraInfo[] }> = ({ data }) => {
+export const ExtraInfoIcon: React.FC<{ data: Array<ExtraInfo | object> }> = ({
+  data,
+}) => {
   return (
     data.length > 0 && (
       <HelpText title={"info"}>

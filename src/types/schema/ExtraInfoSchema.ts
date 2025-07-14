@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-export const ExtraInfoReasonSchema = z.enum(["TIDLIGERE_UTBETALT"]);
-
 export const ExtraInfoTypes = {
   OverstyrtSkatteKort:
     "no.nav.sokos.dare.poc.beregning.OverstyrtSkatteKortExtraInfo",
@@ -19,7 +17,7 @@ export const OverstyrtSkatteKortExtraInfoSchema = z.object({
   type: z.literal(ExtraInfoTypes.OverstyrtSkatteKort),
   grunnlag: z.number(),
   prosentSats: z.string(),
-  grunn: ExtraInfoReasonSchema,
+  grunn: z.string(),
 });
 
 export const ProsentSkatteTrekkSchema = z.object({
