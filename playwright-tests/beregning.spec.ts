@@ -3,7 +3,9 @@ import { test } from "@playwright/test";
 test.describe("Beregning", () => {
   test("Enkel beregning tabelltrekk 8130", async ({ page }) => {
     await page.goto("http://localhost:5173/dare/form");
-    await page.waitForURL("**/dare/form"); // Wait for page to get ready.
+    await page.waitForTimeout(5000); // Desperation.
+    await page.goto("http://localhost:5173/dare/form");
+    await page.waitForTimeout(5000); // Desperation.
 
     await page.waitForSelector("#select-rj", { state: "visible" });
     const select = page.locator("#select-rj");
