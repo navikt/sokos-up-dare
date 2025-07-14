@@ -73,5 +73,6 @@ export default defineConfig({
     command: "pnpm run dev",
     url: "http://localhost:5173/dare",
     reuseExistingServer: !process.env.CI,
+    timeout: 30000,
   },
 });
