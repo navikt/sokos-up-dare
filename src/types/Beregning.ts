@@ -13,6 +13,8 @@ export type Row = z.infer<typeof RowSchema>;
 
 export type ExtraInfo = z.infer<typeof ExtraInfoSchema>;
 
+export type ExtraInfoValueType = string | number | Date | boolean | string[];
+
 export type OverstyrtSkatteKortExtraInfo = z.infer<
   typeof OverstyrtSkatteKortExtraInfoSchema
 >;

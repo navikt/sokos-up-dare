@@ -5,7 +5,9 @@ export const RowSchema = z.object({
   rowName: z.string(),
   singleVal: z.boolean(),
   values: z.array(z.number()),
-  ekstra: z.array(ExtraInfoSchema).optional(),
+  ekstra: z
+    .array(z.union([ExtraInfoSchema, z.object({}).passthrough()]))
+    .optional(),
 });
 
 export const BeregningSchema = z.object({
