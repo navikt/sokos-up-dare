@@ -7,7 +7,6 @@ test.describe("Beregning", () => {
 
     await page.waitForTimeout(5000);
 
-    await page.locator("#select-rj").screenshot({ path: "select-rj.png" });
     const html = await page.content();
     // eslint-disable-next-line no-console
     console.log(html);
