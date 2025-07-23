@@ -20,7 +20,7 @@
     "@navikt/aksel-icons": "^7.24.0",
     "@navikt/ds-css": "^7.24.0",
     "@navikt/ds-react": "^7.24.0",
-    "axios": "^1.10.0",
+    "axios": "^1.11.0",
     "luxon": "^3.6.1",
     "lz-string": "^1.5.0",
     "react": "^19.1.0",
