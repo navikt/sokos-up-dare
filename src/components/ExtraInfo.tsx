@@ -1,103 +1,112 @@
 import React from "react";
 import { Heading, HelpText, Table, VStack } from "@navikt/ds-react";
+import { ExtraInfo, ExtraInfoValueType } from "../types/Beregning";
 import {
-  ExtraInfo,
-  OverstyrtSkatteKortExtraInfo,
-  ProsentExtraInfo,
-  TabellExtraInfo,
-} from "../types/Beregning";
-import { ExtraInfoTypes } from "../types/schema/ExtraInfoSchema";
+  ExtraInfoTypes,
+  SkatteTrekkTypes,
+} from "../types/schema/ExtraInfoSchema";
+import { capitalize } from "../util/misc";
 
-const KeyValTable: React.FC<{
-  data: Record<string, string | number>;
-  title?: string;
-}> = ({ data, title }) => {
+function label(key: string) {
+  const map: Record<string, string> = {
+    [ExtraInfoTypes.ProsentExtraInfo]: "Prosenttrekk",
+    [ExtraInfoTypes.TabellExtraInfo]: "Tabelltrekk",
+    [ExtraInfoTypes.OverstyrtSkatteKort]: "Overstyrt skattekort",
+    [SkatteTrekkTypes.ProsentSkatteTrekk]: "Skattetrekk (prosent)",
+    [SkatteTrekkTypes.TabellSkatteTrekk]: "Skattetrekk (tabell)",
+    [SkatteTrekkTypes.DefaultSkatteTrekk]: "Skattetrekk (default)",
+    prosentSats: "Prosentsats",
+    inntektsAar: "Inntektsår",
+    utstedtDato: "Utstedt dato",
+    skatteDager: "Skattedager",
+  };
+  return map[key] || capitalize(key);
+}
+
+function formatValue(value: ExtraInfoValueType): string {
+  if (Array.isArray(value)) {
+    return value.join(", ");
+  }
+  if (value instanceof Date) {
+    return value.toLocaleDateString();
+  }
+  if (typeof value === "boolean") {
+    return value ? "Ja" : "Nei";
+  }
+  return String(value);
+}
+
+const KeyValTableRow: React.FC<{
+  tab: number;
+  field: string;
+  value: ExtraInfoValueType | object;
+}> = ({ tab, field, value }) => {
+  if (typeof value === "object" && !Array.isArray(value)) {
+    const { type, ...data } = value as { type: string } & Record<
+      string,
+      ExtraInfoValueType | object
+    >;
+    return (
+      <>
+        <Table.Row key={`${type || field}-${field}`}>
+          <Table.HeaderCell>
+            {tab > 0 && <span style={{ paddingLeft: `${tab * 2}rem` }}></span>}
+            <span style={{ textDecoration: "underline" }}>
+              {label(type || field)}:
+            </span>
+          </Table.HeaderCell>
+          <Table.DataCell></Table.DataCell>
+        </Table.Row>
+        {Object.entries(data).map(([k, v]) => (
+          <KeyValTableRow tab={tab + 1} key={k} field={k} value={v} />
+        ))}
+      </>
+    );
+  }
+  return (
+    <Table.Row key={field}>
+      <Table.HeaderCell>
+        {tab > 0 && <span style={{ paddingLeft: `${tab * 2}rem` }}></span>}
+        {label(field)}:
+      </Table.HeaderCell>
+      <Table.DataCell>{formatValue(value)}</Table.DataCell>
+    </Table.Row>
+  );
+};
+
+const ExtraInfoTable: React.FC<
+  ({ type?: string } & Record<string, ExtraInfoValueType>) | ExtraInfo
+> = ({ type, ...data }) => {
   return (
     <>
-      {title && (
+      {type && (
         <Heading
           level="2"
           size="small"
           spacing
           style={{ textDecoration: "underline" }}
         >
-          {title}:
+          {label(type)}:
         </Heading>
       )}
       <Table size={"small"}>
         {Object.entries(data).map(([key, value]) => (
-          <Table.Row key={key}>
-            <Table.HeaderCell>{key}:</Table.HeaderCell>
-            <Table.DataCell>{value}</Table.DataCell>
-          </Table.Row>
+          <KeyValTableRow tab={0} key={key} field={key} value={value} />
         ))}
       </Table>
     </>
   );
 };
 
-export const ProsentTrekk: React.FC<{ info: ProsentExtraInfo }> = ({
-  info,
-}) => (
-  <KeyValTable
-    title="Prosenttrekk"
-    data={{
-      Skattegrunnlag: info.grunnlag,
-      Prosentsats: info.skatteInfo.prosentSats,
-    }}
-  />
-);
-
-export const OverstyrtSkatteKort: React.FC<{
-  info: OverstyrtSkatteKortExtraInfo;
-}> = ({ info }) => (
-  <KeyValTable
-    title={"Overstyrt skattekort"}
-    data={{
-      Skattegrunnlag: info.grunnlag,
-      Prosentsats: info.prosentSats,
-      "Grunn for overstyring": info.grunn,
-    }}
-  />
-);
-
-export const TabellTrekk: React.FC<{ info: TabellExtraInfo }> = ({ info }) => {
-  // noinspection JSNonASCIINames
-  return (
-    <KeyValTable
-      title={"Tabelltrekk"}
-      data={{
-        Skattegrunnlag: info.grunnlag,
-        Tabelltrekk: info.skatteInfo.trekktabell,
-        Inntektsår: info.skatteInfo.inntektsAar,
-        "Skattekort ID": info.skatteInfo.skattekortIdentifikator,
-        "Utstedt dato": info.skatteInfo.utstedtDato,
-        Skattedager: info.skatteDager,
-      }}
-    />
-  );
-};
-
-export const ExtraInfoContent: React.FC<{ info: ExtraInfo }> = ({ info }) => {
-  switch (info.type) {
-    case ExtraInfoTypes.OverstyrtSkatteKort:
-      return (
-        <OverstyrtSkatteKort info={info as OverstyrtSkatteKortExtraInfo} />
-      );
-    case ExtraInfoTypes.ProsentExtraInfo:
-      return <ProsentTrekk info={info as ProsentExtraInfo} />;
-    case ExtraInfoTypes.TabellExtraInfo:
-      return <TabellTrekk info={info as TabellExtraInfo} />;
-  }
-};
-
-export const ExtraInfoIcon: React.FC<{ data: ExtraInfo[] }> = ({ data }) => {
+export const ExtraInfoIcon: React.FC<{ data: Array<ExtraInfo | object> }> = ({
+  data,
+}) => {
   return (
     data.length > 0 && (
       <HelpText title={"info"}>
         <VStack>
           {data.map((info, index) => (
-            <ExtraInfoContent key={"extrainfo-" + index} info={info} />
+            <ExtraInfoTable key={"extrainfo-" + index} {...info} />
           ))}
         </VStack>
       </HelpText>

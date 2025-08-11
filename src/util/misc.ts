@@ -15,9 +15,15 @@ export function csvEscape(field: string | number) {
   return /[",\n]/.test(str) ? `"${str.replace(/"/g, '""')}"` : str;
 }
 
+export function capitalize(str: string) {
+  if (!str) return str;
+  return str[0].toUpperCase() + str.slice(1);
+}
+
 export function generateCsv(calc: Beregning): string {
-  function formatMetaData(info: ExtraInfo) {
-    switch (info.type) {
+  function formatMetaData(info: ExtraInfo | object) {
+    const extraInfo = info as ExtraInfo;
+    switch (extraInfo.type) {
       case ExtraInfoTypes.OverstyrtSkatteKort: {
         const o = info as OverstyrtSkatteKortExtraInfo;
         return csvEscape(
@@ -37,7 +43,7 @@ export function generateCsv(calc: Beregning): string {
         );
       }
       default:
-        return "";
+        return csvEscape(`Ukjent ekstra-info: ${JSON.stringify(info)}`);
     }
   }
 

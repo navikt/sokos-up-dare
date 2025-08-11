@@ -36,6 +36,7 @@ const SkattekortForm: React.FC<Props> = ({ skattekort, update }) => {
       <Box width={"120px"} height={"100px"}>
         {skattekort.skattetrekkType === "tabelltrekk" ? (
           <Select
+            id={"skatteTabell"}
             label={"Tabell"}
             value={skattekort.tabellNummer}
             onChange={(e) =>

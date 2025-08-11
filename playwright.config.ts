@@ -71,7 +71,8 @@ export default defineConfig({
   ],
   webServer: {
     command: "pnpm run dev",
-    url: "http://localhost:5173/dare",
+    url: "http://localhost:5173",
     reuseExistingServer: !process.env.CI,
+    timeout: 30000,
   },
 });
