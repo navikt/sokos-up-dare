@@ -48,8 +48,8 @@ importers:
         specifier: ^2.3.6
         version: 2.3.6(react@19.1.1)
       zod:
-        specifier: ^3.25.67
-        version: 3.25.67
+        specifier: ^4.1.1
+        version: 4.1.1
     devDependencies:
       '@eslint/js':
         specifier: ^9.34.0
@@ -2984,8 +2984,8 @@ packages:
     resolution: {integrity: sha512-cYVsTjKl8b+FrnidjibDWskAv7UKOfcwaVZdp/it9n1s9fU3IkgDbhdIRKCW4JDsAlECJY0ytoVPT3sK6kideA==}
     engines: {node: '>=18'}
 
-  zod@3.25.67:
-    resolution: {integrity: sha512-idA2YXwpCdqUSKRCACDE6ItZD9TZzy3OZMtpfLoh6oPR47lipysRrJfjzMqFxQ3uJuUPyUeWe1r9vLH33xO/Qw==}
+  zod@4.1.1:
+    resolution: {integrity: sha512-SgMZK/h8Tigt9nnKkfJMvB/mKjiJXaX26xegP4sa+0wHIFVFWVlsQGdhklDmuargBD3Hsi3rsQRIzwJIhTPJHA==}
 
 snapshots:
 
@@ -6029,4 +6029,4 @@ snapshots:
 
   yoctocolors-cjs@2.1.2: {}
 
-  zod@3.25.67: {}
+  zod@4.1.1: {}
