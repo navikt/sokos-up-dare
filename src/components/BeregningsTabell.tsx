@@ -2,6 +2,7 @@ import React from "react";
 import { DownloadIcon } from "@navikt/aksel-icons";
 import { Box, Button, HStack, Table, Tooltip, VStack } from "@navikt/ds-react";
 import { Beregning, Row } from "../types/Beregning";
+import { dateStringToWeekday } from "../util/date";
 import { generateCsv } from "../util/misc";
 import { ExtraInfoIcon } from "./ExtraInfo";
 
@@ -23,12 +24,10 @@ const BeregningsTabell: React.FC<{ calc: Beregning }> = ({ calc }) => {
                   </Table.HeaderCell>
                   {calc.columns.map((date) => (
                     <Table.DataCell key={date} scope="col">
-                      <Tooltip content={`dato: ${date}`}>
-                        <span>
-                          {new Date(date).toLocaleDateString("no-NO", {
-                            weekday: "long",
-                          })}
-                        </span>
+                      <Tooltip
+                        content={`Dato: ${dateStringToWeekday(date)} ${date}`}
+                      >
+                        <span>{date}</span>
                       </Tooltip>
                     </Table.DataCell>
                   ))}

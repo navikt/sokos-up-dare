@@ -7,6 +7,13 @@ export function formatDate(d: Date | undefined): string | undefined {
   );
 }
 
+export function dateStringToWeekday(date: string): string {
+  const weekday = new Date(date).toLocaleDateString("no-NO", {
+    weekday: "long",
+  });
+  return weekday[0].toUpperCase() + weekday.slice(1);
+}
+
 export default formatDate;
 
 export function formatXmlDate(stringDate: string): string {
