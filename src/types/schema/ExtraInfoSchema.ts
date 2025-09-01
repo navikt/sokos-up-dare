@@ -31,7 +31,7 @@ export const OverstyrtSkatteKortExtraInfoSchema = z
     prosentSats: z.string(),
     grunn: z.string(),
   })
-  .passthrough();
+  .catchall(json);
 
 export const ProsentSkatteTrekkSchema = z
   .object({
@@ -51,7 +51,7 @@ export const DefaultSkatteTrekkSchema = z
     fagomraade: z.enum(["AAP"]),
     prosentSats: z.number(),
   })
-  .passthrough();
+  .catchall(json);
 
 export const ProsentExtraInfoSchema = z
   .object({
@@ -62,7 +62,7 @@ export const ProsentExtraInfoSchema = z
       DefaultSkatteTrekkSchema,
     ]),
   })
-  .passthrough();
+  .catchall(json);
 
 export const TabellSkatteTrekkSchema = z
   .object({
@@ -72,7 +72,7 @@ export const TabellSkatteTrekkSchema = z
     skattekortIdentifikator: z.number(),
     utstedtDato: z.string(),
   })
-  .passthrough();
+  .catchall(json);
 
 export const TabellExtraInfoSchema = z
   .object({
@@ -81,7 +81,7 @@ export const TabellExtraInfoSchema = z
     skatteInfo: TabellSkatteTrekkSchema,
     skatteDager: z.number(),
   })
-  .passthrough();
+  .catchall(json);
 
 export const ExtraInfoSchema = z.discriminatedUnion("type", [
   OverstyrtSkatteKortExtraInfoSchema,
