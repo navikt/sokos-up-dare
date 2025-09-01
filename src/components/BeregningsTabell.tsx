@@ -23,18 +23,20 @@ const BeregningsTabell: React.FC<{ calc: Beregning }> = ({ calc }) => {
                     Dag
                   </Table.HeaderCell>
                   {calc.columns.map((date) => (
-                    <Table.DataCell key={date} scope="col">
+                    <Table.HeaderCell align={"right"} key={date} scope="col">
                       <Tooltip
-                        content={`Dato: ${dateStringToWeekday(date)} ${date}`}
+                        content={`Dato: ${dateStringToWeekday(date)}, ${date}`}
                       >
                         <span>{date}</span>
                       </Tooltip>
-                    </Table.DataCell>
+                    </Table.HeaderCell>
                   ))}
-                  <Table.DataCell align={"right"} scope="col">
+                  <Table.HeaderCell align={"right"} scope="col">
                     Sum
-                  </Table.DataCell>
-                  <Table.DataCell></Table.DataCell>
+                  </Table.HeaderCell>
+                  <Table.HeaderCell
+                    style={{ minWidth: "20px" }}
+                  ></Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
               <Table.Body>
@@ -58,7 +60,7 @@ const BeregningsTabell: React.FC<{ calc: Beregning }> = ({ calc }) => {
                     <Table.DataCell align={"right"}>
                       {calc.sumColumn[index]}
                     </Table.DataCell>
-                    <Table.DataCell>
+                    <Table.DataCell style={{ minWidth: "20px" }}>
                       {row.ekstra && <ExtraInfoIcon data={row.ekstra} />}
                     </Table.DataCell>
                   </Table.Row>

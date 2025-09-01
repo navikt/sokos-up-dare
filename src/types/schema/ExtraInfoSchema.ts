@@ -1,5 +1,16 @@
 import { z } from "zod";
 
+const json: z.ZodType<unknown> = z.lazy(() =>
+  z.union([
+    z.string(),
+    z.number(),
+    z.boolean(),
+    z.null(),
+    z.array(json),
+    z.record(json),
+  ]),
+);
+
 export const ExtraInfoTypes = {
   OverstyrtSkatteKort:
     "no.nav.sokos.dare.poc.beregning.OverstyrtSkatteKortExtraInfo",
@@ -13,52 +24,64 @@ export const SkatteTrekkTypes = {
   TabellSkatteTrekk: "no.nav.sokos.dare.poc.skattetrekk.TabellSkatteTrekk",
 };
 
-export const OverstyrtSkatteKortExtraInfoSchema = z.object({
-  type: z.literal(ExtraInfoTypes.OverstyrtSkatteKort),
-  grunnlag: z.number(),
-  prosentSats: z.string(),
-  grunn: z.string(),
-});
+export const OverstyrtSkatteKortExtraInfoSchema = z
+  .object({
+    type: z.literal(ExtraInfoTypes.OverstyrtSkatteKort),
+    grunnlag: z.number(),
+    prosentSats: z.string(),
+    grunn: z.string(),
+  })
+  .passthrough();
 
-export const ProsentSkatteTrekkSchema = z.object({
-  type: z.literal(SkatteTrekkTypes.ProsentSkatteTrekk),
-  prosentSats: z.number(),
-  inntektsAar: z.number(),
-  skattekortIdentifikator: z.number(),
-  utstedtDato: z.string(),
-  utsettes: z.boolean(),
-  tilleggspplysning: z.array(z.string()).optional(),
-});
+export const ProsentSkatteTrekkSchema = z
+  .object({
+    type: z.literal(SkatteTrekkTypes.ProsentSkatteTrekk),
+    prosentSats: z.number(),
+    inntektsAar: z.number(),
+    skattekortIdentifikator: z.number(),
+    utstedtDato: z.string(),
+    utsettes: z.boolean(),
+    tilleggspplysning: z.array(z.string()).optional(),
+  })
+  .passthrough();
 
-export const DefaultSkatteTrekkSchema = z.object({
-  type: z.literal(SkatteTrekkTypes.DefaultSkatteTrekk),
-  fagomraade: z.enum(["AAP"]),
-  prosentSats: z.number(),
-});
+export const DefaultSkatteTrekkSchema = z
+  .object({
+    type: z.literal(SkatteTrekkTypes.DefaultSkatteTrekk),
+    fagomraade: z.enum(["AAP"]),
+    prosentSats: z.number(),
+  })
+  .passthrough();
 
-export const ProsentExtraInfoSchema = z.object({
-  type: z.literal(ExtraInfoTypes.ProsentExtraInfo),
-  grunnlag: z.number(),
-  skatteInfo: z.discriminatedUnion("type", [
-    ProsentSkatteTrekkSchema,
-    DefaultSkatteTrekkSchema,
-  ]),
-});
+export const ProsentExtraInfoSchema = z
+  .object({
+    type: z.literal(ExtraInfoTypes.ProsentExtraInfo),
+    grunnlag: z.number(),
+    skatteInfo: z.discriminatedUnion("type", [
+      ProsentSkatteTrekkSchema,
+      DefaultSkatteTrekkSchema,
+    ]),
+  })
+  .passthrough();
 
-export const TabellSkatteTrekkSchema = z.object({
-  type: z.literal(SkatteTrekkTypes.TabellSkatteTrekk),
-  trekktabell: z.string(),
-  inntektsAar: z.number(),
-  skattekortIdentifikator: z.number(),
-  utstedtDato: z.string(),
-});
+export const TabellSkatteTrekkSchema = z
+  .object({
+    type: z.literal(SkatteTrekkTypes.TabellSkatteTrekk),
+    trekktabell: z.string(),
+    inntektsAar: z.number(),
+    skattekortIdentifikator: z.number(),
+    utstedtDato: z.string(),
+  })
+  .passthrough();
 
-export const TabellExtraInfoSchema = z.object({
-  type: z.literal(ExtraInfoTypes.TabellExtraInfo),
-  grunnlag: z.number(),
-  skatteInfo: TabellSkatteTrekkSchema,
-  skatteDager: z.number(),
-});
+export const TabellExtraInfoSchema = z
+  .object({
+    type: z.literal(ExtraInfoTypes.TabellExtraInfo),
+    grunnlag: z.number(),
+    skatteInfo: TabellSkatteTrekkSchema,
+    skatteDager: z.number(),
+  })
+  .passthrough();
 
 export const ExtraInfoSchema = z.discriminatedUnion("type", [
   OverstyrtSkatteKortExtraInfoSchema,

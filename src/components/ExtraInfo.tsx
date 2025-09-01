@@ -19,6 +19,7 @@ function label(key: string) {
     inntektsAar: "Inntektsår",
     utstedtDato: "Utstedt dato",
     skatteDager: "Skattedager",
+    periode: "Periode",
   };
   return map[key] || capitalize(key);
 }
