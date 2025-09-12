@@ -28,13 +28,16 @@ import { postOppdrag } from "../api/apiService";
 import BeregningsTabell from "../components/BeregningsTabell";
 import DatoFelt from "../components/DatoFelt";
 import SkattekortForm from "../components/SkattekortForm";
+import TrekkListe, { nyttTrekk } from "../components/TrekkForm";
 import { oppdragsXmlTemplate } from "../data/oppdragsXmlTemplate";
 import { Beregning } from "../types/Beregning";
 import { FetchState } from "../types/FetchState";
 import { Oppdragsbeskrivelse } from "../types/Oppdragsbeskrivelse";
 import { Skattetrekk } from "../types/Skattetrekk";
 import { Testberegning } from "../types/Testberegning";
+import { Trekk } from "../types/Trekk";
 import { formatXmlDate } from "../util/date";
+import { useFlaskBubbles } from "../util/misc";
 import { fillTemplate, flattenObject } from "../util/template";
 import styles from "./TemplatePage.module.css";
 
@@ -57,6 +60,7 @@ export const Oppdrag = () => {
   const [state, setState] = useState<FetchState<Beregning>>({ status: "idle" });
   const [copying, setCopying] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<string>("");
+  const [warn, setWarn] = useState<string>("");
 
   const handleSubmit = () => {
     const oppdragsXml = filledTemplate();
@@ -64,6 +68,7 @@ export const Oppdrag = () => {
       oppdragsXmlVersjon: "2.5",
       oppdragsXml: oppdragsXml,
       ...formData.skattekort,
+      ...formData.trekk,
     };
     const range: DateRange = {
       from: new Date(formData.datoVedtakFom),
@@ -77,12 +82,9 @@ export const Oppdrag = () => {
     const compressedState = params.get("state");
 
     if (compressedState) {
-      try {
-        const json = decompressFromEncodedURIComponent(compressedState);
-        return JSON.parse(json);
-      } catch {
-        // Never mind.
-      }
+      const json = decompressFromEncodedURIComponent(compressedState);
+      if (json) return JSON.parse(json);
+      setWarn("Form resatt pga. ugyldig tilstand.");
     }
     return initialState;
   });
@@ -112,6 +114,8 @@ export const Oppdrag = () => {
     return () => clearTimeout(timeout);
   }, [formData, navigate, location.search]);
 
+  useFlaskBubbles();
+
   return (
     <>
       <div className={styles["template-body"]}>
@@ -119,9 +123,22 @@ export const Oppdrag = () => {
           <Heading spacing level="1" size="large">
             <HStack justify={"center"} align={"center"} gap={"1"}>
               Oppdragstester
-              <TestFlaskIcon title="Oppdragstester" />
+              <TestFlaskIcon
+                id="testflask"
+                title="Oppdragstester"
+                fontSize="3rem"
+              />
             </HStack>
           </Heading>
+          {warn && (
+            <Alert
+              variant="warning"
+              closeButton={true}
+              onClose={() => setWarn("")}
+            >
+              {warn}
+            </Alert>
+          )}
         </div>
         <VStack gap="2">
           <HStack gap="2">
@@ -201,6 +218,28 @@ export const Oppdrag = () => {
         </VStack>
         <VStack gap={"4"}>
           <Box />
+          <HStack gap="2" className={"knapperad"}>
+            <Button
+              variant={"secondary"}
+              onClick={() => {
+                setFormData({
+                  ...formData,
+                  trekk: [
+                    ...(formData.trekk || []),
+                    nyttTrekk(formData.datoVedtakFom, formData.datoVedtakTom),
+                  ],
+                });
+              }}
+            >
+              Legg til trekk
+            </Button>
+          </HStack>
+          <TrekkListe
+            trekk={formData.trekk}
+            update={(value: Trekk[]) =>
+              setFormData({ ...formData, trekk: value })
+            }
+          />
           <HStack justify={"space-between"}>
             <HStack gap="2" className={"knapperad"}>
               <Button
@@ -280,7 +319,7 @@ export const Oppdrag = () => {
           >
             <Modal.Body>
               <BodyLong>
-                <pre style={{ fontSize: "small" }}>{modalContent}</pre>
+                <code style={{ fontSize: "small" }}>{modalContent}</code>
               </BodyLong>
             </Modal.Body>
           </Modal>
