@@ -5,6 +5,7 @@ import { Beregning, Row } from "../types/Beregning";
 import { dateStringToWeekday } from "../util/date";
 import { generateCsv } from "../util/misc";
 import { ExtraInfoIcon } from "./ExtraInfo";
+import styles from "./beregningsTabell.module.css";
 
 const BeregningsTabell: React.FC<{ calc: Beregning }> = ({ calc }) => {
   return (
@@ -15,11 +16,11 @@ const BeregningsTabell: React.FC<{ calc: Beregning }> = ({ calc }) => {
             <Table
               id="beregningstabell"
               key={JSON.stringify(calc)}
-              className={"fade-in"}
+              className={styles.table}
             >
               <Table.Header>
                 <Table.Row>
-                  <Table.HeaderCell scope="col" className={"sticky"}>
+                  <Table.HeaderCell scope="col" className={styles.sticky}>
                     Dag
                   </Table.HeaderCell>
                   {calc.columns.map((date) => (
@@ -42,7 +43,7 @@ const BeregningsTabell: React.FC<{ calc: Beregning }> = ({ calc }) => {
               <Table.Body>
                 {calc.rows.map((row: Row, index: number) => (
                   <Table.Row key={row.rowName}>
-                    <Table.HeaderCell scope="row" className={"sticky"}>
+                    <Table.HeaderCell scope="row" className={styles.sticky}>
                       {row.rowName}
                     </Table.HeaderCell>
                     {row.singleVal ? (
@@ -66,7 +67,7 @@ const BeregningsTabell: React.FC<{ calc: Beregning }> = ({ calc }) => {
                   </Table.Row>
                 ))}
                 <Table.Row key={"Kapasitet"}>
-                  <Table.HeaderCell scope="row" className={"sticky"}>
+                  <Table.HeaderCell scope="row" className={styles.sticky}>
                     Kapasitet
                   </Table.HeaderCell>
                   {calc.sums.values.map((n: number, i: number) => (
