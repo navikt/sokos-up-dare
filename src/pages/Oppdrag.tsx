@@ -68,7 +68,7 @@ export const Oppdrag = () => {
       oppdragsXmlVersjon: "2.5",
       oppdragsXml: oppdragsXml,
       ...formData.skattekort,
-      ...formData.trekk,
+      trekk: formData.trekk,
     };
     const range: DateRange = {
       from: new Date(formData.datoVedtakFom),
