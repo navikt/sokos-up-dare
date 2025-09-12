@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   Beregning,
   ExtraInfo,
@@ -9,6 +10,9 @@ import {
 import { ExtraInfoTypes } from "../types/schema/ExtraInfoSchema";
 
 export const sum = (arr: number[]) => arr.reduce((a, b) => a + b, 0);
+
+export const clamp = (min: number, value: number, max: number) =>
+  Math.min(max, Math.max(min, value));
 
 export function csvEscape(field: string | number) {
   const str = String(field);
@@ -82,4 +86,91 @@ export function generateCsv(calc: Beregning): string {
       sum(calc.sums.values),
   ];
   return data.join("\n");
+}
+
+// Easter egg
+export function useFlaskBubbles(selector = "#testflask") {
+  useEffect(() => {
+    const svg = document.querySelector(selector) as SVGSVGElement | null;
+    if (!svg) return;
+
+    // avoid duplicating in dev or re-renders
+    if (svg.querySelector("g[data-bubbles]")) return;
+
+    // ensure we have a viewBox so positions are in SVG units
+    if (!svg.getAttribute("viewBox")) {
+      const bbox = svg.getBBox();
+      svg.setAttribute(
+        "viewBox",
+        `${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`,
+      );
+    }
+
+    const vb = svg.viewBox.baseVal; // SVG coord system
+    const r = vb.width * 0.1; // bubble radius proportional to icon size
+
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.setAttribute("data-bubbles", "true");
+
+    // 3 bubbles placed in SVG units so they scale with the icon
+    const makeBubble = (
+      cx: number,
+      cy: number,
+      radius: number,
+      delay: number,
+      cls: string,
+    ) => {
+      const c = document.createElementNS(svg.namespaceURI, "circle");
+      c.setAttribute("class", `bubble ${cls}`);
+      c.setAttribute("cx", String(cx));
+      c.setAttribute("cy", String(cy));
+      c.setAttribute("r", String(radius));
+      c.setAttribute("fill", "currentColor");
+      c.setAttribute("style", `animation-delay:${delay}s`);
+      return c;
+    };
+
+    g.append(
+      makeBubble(
+        vb.x + vb.width * 0.55,
+        vb.y + vb.height * 0.775,
+        r * 0.9,
+        0.0,
+        "b1",
+      ),
+      makeBubble(
+        vb.x + vb.width * 0.45,
+        vb.y + vb.height * 0.782,
+        r * 0.7,
+        0.6,
+        "b2",
+      ),
+      makeBubble(
+        vb.x + vb.width * 0.6,
+        vb.y + vb.height * 0.786,
+        r * 0.6,
+        1.2,
+        "b3",
+      ),
+    );
+
+    // lightweight CSS-in-SVG for animation
+    const style = document.createElementNS(svg.namespaceURI, "style");
+    style.textContent = `
+      .bubble {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: bubble-rise 2.6s infinite ease-in;
+        opacity: 0;
+      }
+      @keyframes bubble-rise {
+        0%   { transform: translateY(20%) scale(0.6); opacity: 0; }
+        15%  { opacity: 1; }
+        100% { transform: translateY(-140%) scale(1); opacity: 0; }
+      }
+    `;
+
+    svg.appendChild(style);
+    svg.appendChild(g);
+  }, [selector]);
 }
