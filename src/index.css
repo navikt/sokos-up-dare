@@ -22,10 +22,6 @@ main {
   width: 100%;
 }
 
-.fade-in {
-  animation: fade-in-keyframes 300ms ease-in;
-}
-
 @keyframes fade-in-keyframes {
   from {
     opacity: 0;
@@ -63,22 +59,4 @@ main {
 .knapperad {
   --ac-button-primary-bg: #0060b8;
   --ac-button-secondary-text: #0060b8;
-}
-
-th,
-td {
-  min-width: 100px;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.sticky {
-  position: sticky;
-  left: 0;
-  background: #e0d8e9;
-  box-shadow: 10px 0 10px rgb(61 41 87 / 20%);
-  z-index: 2;
 }
