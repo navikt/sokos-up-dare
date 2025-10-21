@@ -1,13 +1,20 @@
 import { z } from "zod";
 
-const json: z.ZodType<unknown> = z.lazy(() =>
+const json: z.ZodType<
+  | string
+  | number
+  | boolean
+  | null
+  | Array<string | number | boolean | null | object>
+  | Record<string, string | number | boolean | null | object>
+> = z.lazy(() =>
   z.union([
     z.string(),
     z.number(),
     z.boolean(),
     z.null(),
     z.array(json),
-    z.record(json),
+    z.record(z.string(), json),
   ]),
 );
 
@@ -43,7 +50,7 @@ export const ProsentSkatteTrekkSchema = z
     utsettes: z.boolean(),
     tilleggspplysning: z.array(z.string()).optional(),
   })
-  .passthrough();
+  .catchall(json);
 
 export const DefaultSkatteTrekkSchema = z
   .object({
