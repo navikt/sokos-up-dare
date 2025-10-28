@@ -7,7 +7,17 @@ import { generateCsv } from "../util/misc";
 import { ExtraInfoIcon } from "./ExtraInfo";
 import styles from "./beregningsTabell.module.css";
 
-const BeregningsTabell: React.FC<{ calc: Beregning }> = ({ calc }) => {
+function capacitySum(row: Row) {
+  return (
+    (row.capacity?.dayCapacity.reduce((a, b) => a + b, 0) || 0) +
+    (row.capacity?.lumpCapacity || 0)
+  );
+}
+
+const BeregningsTabell: React.FC<{
+  calc: Beregning;
+  showCapacity?: boolean;
+}> = ({ calc, showCapacity }) => {
   return (
     calc && (
       <Box padding={{ xs: "2", md: "6" }}>
@@ -20,7 +30,7 @@ const BeregningsTabell: React.FC<{ calc: Beregning }> = ({ calc }) => {
             >
               <Table.Header>
                 <Table.Row>
-                  <Table.HeaderCell scope="col" className={styles.sticky}>
+                  <Table.HeaderCell scope="col" className={styles.stickyLeft}>
                     Dag
                   </Table.HeaderCell>
                   {calc.columns.map((date) => (
@@ -32,10 +42,24 @@ const BeregningsTabell: React.FC<{ calc: Beregning }> = ({ calc }) => {
                       </Tooltip>
                     </Table.HeaderCell>
                   ))}
-                  <Table.HeaderCell align={"right"} scope="col">
+                  <Table.HeaderCell
+                    align={"right"}
+                    scope="col"
+                    style={{ width: "7em" }}
+                    className={styles.stickyRight}
+                  >
+                    Enkeltbeløp
+                  </Table.HeaderCell>
+                  <Table.HeaderCell
+                    align={"right"}
+                    scope="col"
+                    style={{ width: "2em" }}
+                    className={styles.sticky}
+                  >
                     Sum
                   </Table.HeaderCell>
                   <Table.HeaderCell
+                    className={styles.sticky}
                     style={{ minWidth: "20px" }}
                   ></Table.HeaderCell>
                 </Table.Row>
@@ -43,40 +67,73 @@ const BeregningsTabell: React.FC<{ calc: Beregning }> = ({ calc }) => {
               <Table.Body>
                 {calc.rows.map((row: Row, index: number) => (
                   <Table.Row key={row.rowName}>
-                    <Table.HeaderCell scope="row" className={styles.sticky}>
+                    <Table.HeaderCell
+                      scope="row"
+                      className={styles.stickyLeft}
+                      style={{ maxWidth: "4em" }}
+                    >
                       {row.rowName}
                     </Table.HeaderCell>
-                    {row.singleVal ? (
-                      <Table.DataCell
-                        align={"right"}
-                        colSpan={calc.columns.length}
-                      ></Table.DataCell>
-                    ) : (
-                      row.values.map((n: number, i: number) => (
-                        <Table.DataCell align={"right"} key={`row${i}`}>
-                          {n}
-                        </Table.DataCell>
-                      ))
-                    )}
-                    <Table.DataCell align={"right"}>
-                      {calc.sumColumn[index]}
+
+                    {row.columnValues.length != 0
+                      ? row.columnValues.map((n: number, i: number) => (
+                          <Table.DataCell align={"right"} key={`row${i}`}>
+                            {n}{" "}
+                            {showCapacity &&
+                              row.capacity &&
+                              `(${row.capacity.dayCapacity[i]})`}
+                          </Table.DataCell>
+                        ))
+                      : calc.columns.map((d, i) => (
+                          <Table.DataCell align={"right"} key={`row${i}`}>
+                            {showCapacity &&
+                              row.capacity &&
+                              `(${row.capacity.dayCapacity[i]})`}
+                          </Table.DataCell>
+                        ))}
+                    <Table.DataCell
+                      align={"right"}
+                      className={styles.stickyRight}
+                    >
+                      {row.rowValue}
+                      {showCapacity && `(${row.capacity?.lumpCapacity || 0})`}
                     </Table.DataCell>
-                    <Table.DataCell style={{ minWidth: "20px" }}>
+                    <Table.DataCell align={"right"} className={styles.sticky}>
+                      {calc.sumColumn[index]}{" "}
+                      {showCapacity && `(${capacitySum(row)})`}
+                    </Table.DataCell>
+                    <Table.DataCell
+                      style={{ minWidth: "20px" }}
+                      className={styles.sticky}
+                    >
                       {row.ekstra && <ExtraInfoIcon data={row.ekstra} />}
                     </Table.DataCell>
                   </Table.Row>
                 ))}
                 <Table.Row key={"Kapasitet"}>
-                  <Table.HeaderCell scope="row" className={styles.sticky}>
+                  <Table.HeaderCell scope="row" className={styles.stickyLeft}>
                     Kapasitet
                   </Table.HeaderCell>
-                  {calc.sums.values.map((n: number, i: number) => (
+                  {calc.sums.columnValues.map((n: number, i: number) => (
                     <Table.DataCell align={"right"} key={`sumrow${i}`}>
                       {n}
                     </Table.DataCell>
                   ))}
-                  <Table.DataCell align={"right"}>
+                  <Table.DataCell
+                    align={"right"}
+                    key={`sumrowval`}
+                    className={styles.stickyRight}
+                  >
+                    {calc.sums.rowValue}
+                    {showCapacity &&
+                      calc.sums.capacity &&
+                      `(${calc.sums.capacity.lumpCapacity})`}
+                  </Table.DataCell>
+                  <Table.DataCell align={"right"} className={styles.sticky}>
                     {calc.sumColumn.reduce((a, b) => a + b, 0)}
+                    {showCapacity &&
+                      calc.sums.capacity &&
+                      `(${calc.sums.capacity.lumpCapacity + calc.sums.columnValues.reduce((a, b) => a + b)})`}
                   </Table.DataCell>
                 </Table.Row>
               </Table.Body>

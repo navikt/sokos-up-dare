@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { BeregningSchema, RowSchema } from "./schema/BeregningSchema";
+import {
+  BeregningSchema,
+  CapacitySchema,
+  RowSchema,
+} from "./schema/BeregningSchema";
 import {
   ExtraInfoSchema,
   OverstyrtSkatteKortExtraInfoSchema,
@@ -8,6 +12,7 @@ import {
 } from "./schema/ExtraInfoSchema";
 
 export type Beregning = z.infer<typeof BeregningSchema>;
+export type Capacity = z.infer<typeof CapacitySchema>;
 
 export type Row = z.infer<typeof RowSchema>;
 

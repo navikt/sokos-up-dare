@@ -20,6 +20,7 @@ import {
   Heading,
   Loader,
   Modal,
+  Switch,
   TextField,
   VStack,
 } from "@navikt/ds-react";
@@ -61,6 +62,7 @@ export const Oppdrag = () => {
   const [copying, setCopying] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<string>("");
   const [warn, setWarn] = useState<string>("");
+  const [showCapacity, setShowCapacity] = useState<boolean>(false);
 
   const handleSubmit = () => {
     const oppdragsXml = filledTemplate();
@@ -262,6 +264,13 @@ export const Oppdrag = () => {
               </Button>
             </HStack>
             <HStack gap={"2"}>
+              <Switch
+                checked={showCapacity}
+                position={"left"}
+                onChange={() => setShowCapacity(!showCapacity)}
+              >
+                Vis detaljert kapasitet
+              </Switch>
               <Button
                 variant="secondary-neutral"
                 disabled={state.status == "loading"}
@@ -334,7 +343,7 @@ export const Oppdrag = () => {
               <Alert variant={"error"}> Noe gikk galt: {state.error} </Alert>
             )}
             {state.status === "success" && (
-              <BeregningsTabell calc={state.data} />
+              <BeregningsTabell calc={state.data} showCapacity={showCapacity} />
             )}
           </Box>
         </VStack>
