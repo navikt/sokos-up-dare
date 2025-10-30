@@ -9,10 +9,25 @@ table {
   animation: fade-in-keyframes 300ms ease-in;
 }
 
-.sticky {
+.sticky-left {
   position: sticky;
   left: 0;
   background: #e0d8e9;
   box-shadow: 10px 0 10px rgb(61 41 87 / 20%);
+  z-index: 2;
+}
+
+td.sticky th.sticky {
+  position: sticky;
+  right: 0;
+  background: #e0d8e9;
+  z-index: 4;
+}
+
+.sticky-right {
+  position: sticky;
+  right: 0;
+  background: #e0d8e9;
+  box-shadow: -10px 0 10px rgb(61 41 87 / 20%);
   z-index: 2;
 }

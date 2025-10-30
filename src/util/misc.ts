@@ -57,33 +57,30 @@ export function generateCsv(calc: Beregning): string {
         ? "," + row.ekstra.map(formatMetaData).join(";")
         : "";
 
-    if (row.singleVal) {
-      return (
-        csvEscape(row.rowName) +
-        ",".repeat(calc.columns.length + 1) +
-        calc.sumColumn[index] +
-        metaData
-      );
-    } else {
-      return (
-        csvEscape(row.rowName) +
-        "," +
-        row.values.join(",") +
-        "," +
-        calc.sumColumn[index] +
-        metaData
-      );
-    }
+    return (
+      csvEscape(row.rowName) +
+      "," +
+      (row.columnValues.length > 0
+        ? row.columnValues.join(",")
+        : ",".repeat(calc.columns.length - 1)) +
+      "," +
+      row.rowValue +
+      "," +
+      calc.sumColumn[index] +
+      metaData
+    );
   }
 
   const data = [
-    "dato," + calc.columns.join(",") + ",sum,ekstra",
+    "dato," + calc.columns.join(",") + ",periode,sum,ekstra",
     ...calc.rows.map(rowFormat),
     calc.sums.rowName +
       "," +
-      calc.sums.values.join(",") +
+      calc.sums.columnValues.join(",") +
       "," +
-      sum(calc.sums.values),
+      calc.sums.rowValue +
+      "," +
+      sum(calc.sums.columnValues),
   ];
   return data.join("\n");
 }
