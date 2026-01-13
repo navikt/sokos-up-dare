@@ -23,29 +23,6 @@ export default defineConfig(({ mode }) => ({
       generateScopedName: "[name]__[local]___[hash:base64:5]",
     },
   },
-  test: {
-    coverage: {
-      provider: "istanbul",
-      reporter: ["text", "json", "html"],
-      exclude: [
-        "**/node_modules/**",
-        "**/dist/**",
-        "**/playwright-tests/**",
-        "**/*.test.{ts,tsx}",
-        "**/*.spec.{ts,tsx}",
-        "**/test/**",
-        "**/mock/**",
-        "**/*.config.{ts,js}",
-      ],
-    },
-    exclude: [
-      "**/node_modules/**",
-      "**/dist/**",
-      "**/playwright-tests/**",
-      "**/playwright-report/**",
-      "**/.{idea,git,cache,output,temp}/**",
-    ],
-  },
   server: {
     proxy: {
       ...(mode === "backend" && {
