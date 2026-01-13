@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { Skattetrekk } from "./SkattetrekkSchema";
+import { SkattetrekkSchema } from "./SkattetrekkSchema";
 import { TrekkSchema } from "./TrekkSchema";
 
 export const OppdragsbeskrivelseSchema = z.object({
-	skattekort: Skattetrekk,
+	skattekort: SkattetrekkSchema,
 	sats: z.number(),
 	vedtaksSats: z.number(),
 	datoVedtakFom: z.string(),
