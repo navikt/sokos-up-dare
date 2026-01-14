@@ -2,61 +2,61 @@
 
 html,
 body {
-  height: 100%;
+	height: 100%;
 }
 
 .page-wrapper {
-  height: auto;
-  min-height: 100%;
-  margin: 5px;
+	height: auto;
+	min-height: 100%;
+	margin: 5px;
 }
 
 .page-layout {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
 main {
-  width: 100%;
+	width: 100%;
 }
 
 @keyframes fade-in-keyframes {
-  from {
-    opacity: 0;
-  }
+	from {
+		opacity: 0;
+	}
 
-  to {
-    opacity: 1;
-  }
+	to {
+		opacity: 1;
+	}
 }
 
 .bump {
-  animation: bump 300ms ease;
+	animation: bump 300ms ease;
 }
 
 @keyframes bump {
-  0% {
-    transform: translateY(0);
-  }
+	0% {
+		transform: translateY(0);
+	}
 
-  30% {
-    transform: translateY(-4px);
-  }
+	30% {
+		transform: translateY(-4px);
+	}
 
-  100% {
-    transform: translateY(0);
-  }
+	100% {
+		transform: translateY(0);
+	}
 }
 
 /* Overrides av design-systemet inntil Aksel får endret fargevalgene sine
  * (se https://nav-it.slack.com/archives/C04V4MVULUA/p1727790124966869) */
 .dare-link {
-  color: #0060b8;
+	color: #0060b8;
 }
 
 .knapperad {
-  --ac-button-primary-bg: #0060b8;
-  --ac-button-secondary-text: #0060b8;
+	--ac-button-primary-bg: #0060b8;
+	--ac-button-secondary-text: #0060b8;
 }

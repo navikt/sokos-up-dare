@@ -1,4 +1,4 @@
-import { z } from "zod";
-import { Skattetrekk } from "./schema/Skattetrekk";
+import type { z } from "zod";
+import type { SkattetrekkSchema } from "./schema/SkattetrekkSchema";
 
-export type Skattetrekk = z.infer<typeof Skattetrekk>;
+export type Skattetrekk = z.infer<typeof SkattetrekkSchema>;

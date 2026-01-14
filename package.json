@@ -1,115 +1,87 @@
 {
-  "name": "sokos-up-dare",
-  "version": "1.0.0",
-  "description": "Mikrofrontend for Utbetalingsportalen",
-  "type": "module",
-  "scripts": {
-    "dev": "vite --mode mock",
-    "dev:backend": "vite --mode backend",
-    "dev:local": "vite --mode localbackend",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "playwright": "playwright test",
-    "prepare": "husky",
-    "lint": "eslint",
-    "stylelint": "stylelint '**/*.css'"
-  },
-  "dependencies": {
-    "@axe-core/playwright": "^4.11.0",
-    "@grafana/faro-web-sdk": "^2.1.0",
-    "@navikt/aksel-icons": "^7.39.0",
-    "@navikt/ds-css": "^7.39.0",
-    "@navikt/ds-react": "^7.39.0",
-    "axios": "^1.13.2",
-    "luxon": "^3.7.2",
-    "lz-string": "^1.5.0",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "react-router": "^7.12.0",
-    "react-router-dom": "^7.12.0",
-    "swr": "^2.3.8",
-    "zod": "^4.3.5"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.39.2",
-    "@navikt/aksel-stylelint": "^7.39.0",
-    "@playwright/test": "^1.57.0",
-    "@rollup/plugin-terser": "^0.4.4",
-    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
-    "@types/luxon": "^3.7.1",
-    "@types/node": "^25.0.8",
-    "@types/react": "^19.2.8",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.2",
-    "autoprefixer": "^10.4.23",
-    "eslint": "^9.39.2",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.26",
-    "globals": "^17.0.0",
-    "husky": "^9.1.7",
-    "jsdom": "^27.4.0",
-    "lint-staged": "^16.2.7",
-    "msw": "^2.12.7",
-    "postcss": "^8.5.6",
-    "prettier": "^3.7.4",
-    "stylelint": "^16.26.1",
-    "stylelint-config-standard": "^39.0.1",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.53.0",
-    "vite": "7.3.1",
-    "vite-plugin-css-injected-by-js": "^3.5.2",
-    "vite-plugin-environment": "^1.1.3"
-  },
-  "msw": {
-    "workerDirectory": [
-      "public"
-    ]
-  },
-  "stylelint": {
-    "extends": [
-      "stylelint-config-standard",
-      "@navikt/aksel-stylelint/recommended"
-    ],
-    "ignoreFiles": "dist/**/*"
-  },
-  "prettier": {
-    "plugins": [
-      "@trivago/prettier-plugin-sort-imports"
-    ],
-    "overrides": [
-      {
-        "files": "**/*.module.css",
-        "options": {
-          "plugins": [
-            "@trivago/prettier-plugin-sort-imports"
-          ]
-        }
-      },
-      {
-        "files": "**/*.css",
-        "options": {
-          "printWidth": 130
-        }
-      }
-    ],
-    "importOrder": [
-      "^@navikt/(.*)$",
-      "^@/(.*)$",
-      "^[./]"
-    ],
-    "importOrderSortSpecifiers": true
-  },
-  "lint-staged": {
-    "*.ts": "eslint",
-    "*.tsx": "eslint",
-    "*.css": "stylelint --fix",
-    "*": "prettier --write --ignore-unknown"
-  },
-  "engines": {
-    "node": ">=22.12.0",
-    "pnpm": ">=9.15"
-  }
+	"name": "sokos-up-dare",
+	"version": "1.0.0",
+	"description": "Mikrofrontend for Utbetalingsportalen",
+	"type": "module",
+	"scripts": {
+		"dev": "vite --mode mock",
+		"dev:backend": "vite --mode backend",
+		"dev:local": "vite --mode localbackend",
+		"build": "tsc && vite build",
+		"playwright": "playwright test",
+		"biome:check": "biome check --files-ignore-unknown=true",
+		"biome:fix": "biome check --write --no-errors-on-unmatched",
+		"stylelint:check": "stylelint '**/*.css'",
+		"stylelint:fix": "stylelint '**/*.css' --fix",
+		"prepare": "husky"
+	},
+	"dependencies": {
+		"@axe-core/playwright": "^4.11.0",
+		"@grafana/faro-web-sdk": "^2.1.0",
+		"@navikt/aksel-icons": "^7.39.0",
+		"@navikt/ds-css": "^7.39.0",
+		"@navikt/ds-react": "^7.39.0",
+		"axios": "^1.13.2",
+		"luxon": "^3.7.2",
+		"lz-string": "^1.5.0",
+		"react": "^19.2.3",
+		"react-dom": "^19.2.3",
+		"react-router": "^7.12.0",
+		"react-router-dom": "^7.12.0",
+		"swr": "^2.3.8",
+		"zod": "^4.3.5"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.11",
+		"@navikt/aksel-stylelint": "^7.39.0",
+		"@playwright/test": "^1.57.0",
+		"@rollup/plugin-terser": "^0.4.4",
+		"@types/luxon": "^3.7.1",
+		"@types/node": "^25.0.8",
+		"@types/react": "^19.2.8",
+		"@types/react-dom": "^19.2.3",
+		"@vitejs/plugin-react": "^5.1.2",
+		"autoprefixer": "^10.4.23",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.2.7",
+		"msw": "^2.12.7",
+		"postcss": "^8.5.6",
+		"stylelint": "^16.26.1",
+		"stylelint-config-standard": "^39.0.1",
+		"typescript": "^5.9.3",
+		"vite": "7.3.1",
+		"vite-plugin-css-injected-by-js": "^3.5.2",
+		"vite-plugin-environment": "^1.1.3"
+	},
+	"msw": {
+		"workerDirectory": [
+			"public"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version"
+		]
+	},
+	"stylelint": {
+		"extends": [
+			"stylelint-config-standard",
+			"@navikt/aksel-stylelint/recommended"
+		],
+		"ignoreFiles": "dist/**/*"
+	},
+	"lint-staged": {
+		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": "biome check --write --no-errors-on-unmatched",
+		"*.css": "stylelint --fix"
+	},
+	"engines": {
+		"pnpm": ">=10.16.0",
+		"node": ">=24.12.0"
+	}
 }
