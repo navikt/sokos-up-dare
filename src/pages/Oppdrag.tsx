@@ -12,6 +12,7 @@ import {
 	Button,
 	Heading,
 	HStack,
+	InlineMessage,
 	Loader,
 	Modal,
 	Switch,
@@ -42,6 +43,8 @@ import { useFlaskBubbles } from "../util/misc";
 import { fillTemplate, flattenObject } from "../util/template";
 import styles from "./TemplatePage.module.css";
 
+const currentYear = new Date().getFullYear();
+
 const initialState: Oppdragsbeskrivelse = {
 	vedtaksSats: 800,
 	sats: 800,
@@ -50,8 +53,8 @@ const initialState: Oppdragsbeskrivelse = {
 		prosentSats: "36,9",
 		tabellNummer: "8010",
 	},
-	datoVedtakFom: "2025-03-31",
-	datoVedtakTom: "2025-04-11",
+	datoVedtakFom: `${currentYear}-03-31`,
+	datoVedtakTom: `${currentYear}-04-11`,
 };
 
 export const Oppdrag = () => {
@@ -98,6 +101,28 @@ export const Oppdrag = () => {
 			datoVedtakTom: formatXmlDate(formData.datoVedtakTom),
 		};
 		return fillTemplate(oppdragsXmlTemplate, templateParams);
+	};
+
+	const DateWarning = () => {
+		if (formData?.datoVedtakFom && formData.datoVedtakTom) {
+			const fom = new Date(formData.datoVedtakFom);
+			const tom = new Date(formData.datoVedtakTom);
+			return (
+				<>
+					{tom.valueOf() < fom.valueOf() && (
+						<InlineMessage status={"error"}>
+							"Fra og med" er etter "Til og med"
+						</InlineMessage>
+					)}
+					{(tom.getFullYear() !== currentYear ||
+						fom.getFullYear() !== currentYear) && (
+						<InlineMessage status={"warning"}>
+							Skattetrekk for tidligere år
+						</InlineMessage>
+					)}
+				</>
+			);
+		}
 	};
 
 	useEffect(() => {
@@ -199,6 +224,7 @@ export const Oppdrag = () => {
 					>
 						<Heading level={"2"} size={"small"}>
 							Dato
+							<DateWarning />
 						</Heading>
 						<DatoFelt
 							label={"Fra og med"}
