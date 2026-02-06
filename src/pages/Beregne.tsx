@@ -119,7 +119,9 @@ export default function Beregne() {
 			{state.status === "error" && (
 				<Alert variant={"error"}> Noe gikk galt: {state.error} </Alert>
 			)}
-			{state.status === "success" && <BeregningsTabell calc={state.data} />}
+			{state.status === "success" && (
+				<BeregningsTabell beregning={state.data} />
+			)}
 
 			<Box>
 				Prøv også:{" "}
