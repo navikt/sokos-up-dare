@@ -368,7 +368,10 @@ export const Oppdrag = () => {
 						<Alert variant={"error"}> Noe gikk galt: {state.error} </Alert>
 					)}
 					{state.status === "success" && (
-						<BeregningsTabell calc={state.data} showCapacity={showCapacity} />
+						<BeregningsTabell
+							beregning={state.data}
+							showCapacity={showCapacity}
+						/>
 					)}
 				</Box>
 			</VStack>

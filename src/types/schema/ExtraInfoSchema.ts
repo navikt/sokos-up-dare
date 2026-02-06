@@ -23,6 +23,7 @@ export const ExtraInfoTypes = {
 		"no.nav.sokos.dare.poc.beregning.OverstyrtSkatteKortExtraInfo",
 	ProsentExtraInfo: "no.nav.sokos.dare.poc.beregning.ProsentExtraInfo",
 	TabellExtraInfo: "no.nav.sokos.dare.poc.beregning.TabellExtraInfo",
+	TekstExtraInfo: "no.nav.sokos.dare.poc.beregning.TekstExtraInfo",
 };
 
 export const SkatteTrekkTypes = {
@@ -90,8 +91,17 @@ export const TabellExtraInfoSchema = z
 	})
 	.catchall(json);
 
+export const TekstExtraInfoSchema = z
+	.object({
+		type: z.literal(ExtraInfoTypes.TekstExtraInfo),
+		grunn: z.string(),
+		tekst: z.string(),
+	})
+	.catchall(json);
+
 export const ExtraInfoSchema = z.discriminatedUnion("type", [
 	OverstyrtSkatteKortExtraInfoSchema,
 	ProsentExtraInfoSchema,
 	TabellExtraInfoSchema,
+	TekstExtraInfoSchema,
 ]);

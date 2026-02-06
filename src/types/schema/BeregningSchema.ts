@@ -16,9 +16,34 @@ export const RowSchema = z.object({
 		.optional(),
 });
 
-export const BeregningSchema = z.object({
+export const DatoIntervallSchema = z.object({
+	fom: z.string(),
+	tom: z.string().optional(),
+});
+
+export const DelperiodeSchema = z.object({
 	columns: z.array(z.string()),
 	rows: z.array(RowSchema),
+	datoIntervall: DatoIntervallSchema,
 	sums: RowSchema,
 	sumColumn: z.array(z.number()),
+	extraInfo: z
+		.array(z.union([ExtraInfoSchema, z.object({}).passthrough()]))
+		.optional(),
+});
+
+export const BeregningSchema = z.object({
+	periode: DatoIntervallSchema,
+	gjelder: z.number(),
+	fagomraade: z.string(),
+	fagsystem: z.string().optional(),
+	forfall: z.string().optional(),
+	overfoeres: z.string().optional(),
+	kid: z.string().optional(),
+	bankkonto: z.string().optional(),
+	oppdrag: z.string().optional(),
+	utbetalesTil: z.number().optional(),
+	refunderesTil: z.number().optional(),
+	delperioder: z.array(DelperiodeSchema),
+	beloepTilUtbetaling: z.number(),
 });

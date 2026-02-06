@@ -38,7 +38,6 @@ export async function postOppdrag(
 	range: DateRange | undefined,
 ) {
 	setState({ status: "loading" });
-
 	try {
 		const responseBody = await testCalculation(test, range);
 		const response = BeregningSchema.safeParse(responseBody);

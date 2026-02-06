@@ -1,7 +1,7 @@
 import { DownloadIcon } from "@navikt/aksel-icons";
 import { Box, Button, HStack, Table, Tooltip, VStack } from "@navikt/ds-react";
 import type React from "react";
-import type { Beregning, Row } from "../types/Beregning";
+import type { Beregning, Delperiode, Row } from "../types/Beregning";
 import { dateStringToWeekday } from "../util/date";
 import { generateCsv } from "../util/misc";
 import styles from "./beregningsTabell.module.css";
@@ -15,17 +15,17 @@ function capacitySum(row: Row) {
 }
 
 const BeregningsTabell: React.FC<{
-	calc: Beregning;
+	beregning: Beregning;
 	showCapacity?: boolean;
-}> = ({ calc, showCapacity }) => {
+}> = ({ beregning, showCapacity }) => {
 	return (
-		calc && (
+		beregning && (
 			<Box padding={{ xs: "2", md: "6" }}>
 				<VStack gap={"4"}>
 					<div style={{ overflowX: "auto", width: "100%" }}>
 						<Table
 							id="beregningstabell"
-							key={JSON.stringify(calc)}
+							key={JSON.stringify(beregning)}
 							className={styles.table}
 						>
 							<Table.Header>
@@ -33,15 +33,17 @@ const BeregningsTabell: React.FC<{
 									<Table.HeaderCell scope="col" className={styles.stickyLeft}>
 										Dag
 									</Table.HeaderCell>
-									{calc.columns.map((date) => (
-										<Table.HeaderCell align={"right"} key={date} scope="col">
-											<Tooltip
-												content={`Dato: ${dateStringToWeekday(date)}, ${date}`}
-											>
-												<span>{date}</span>
-											</Tooltip>
-										</Table.HeaderCell>
-									))}
+									{beregning.delperioder.map((calc: Delperiode) =>
+										calc.columns.map((date) => (
+											<Table.HeaderCell align={"right"} key={date} scope="col">
+												<Tooltip
+													content={`Dato: ${dateStringToWeekday(date)}, ${date}`}
+												>
+													<span>{date}</span>
+												</Tooltip>
+											</Table.HeaderCell>
+										)),
+									)}
 									<Table.HeaderCell
 										align={"right"}
 										scope="col"
@@ -65,79 +67,84 @@ const BeregningsTabell: React.FC<{
 								</Table.Row>
 							</Table.Header>
 							<Table.Body>
-								{calc.rows.map((row: Row, index: number) => (
-									<Table.Row key={row.rowName}>
-										<Table.HeaderCell
-											scope="row"
-											className={styles.stickyLeft}
-											style={{ maxWidth: "4em" }}
-										>
-											{row.rowName}
-										</Table.HeaderCell>
-
-										{row.columnValues.length !== 0
-											? row.columnValues.map((n: number, i: number) => (
-													// biome-ignore lint/suspicious/noArrayIndexKey: ignore
-													<Table.DataCell align={"right"} key={`row${i}`}>
-														{n}{" "}
-														{showCapacity &&
-															row.capacity &&
-															`(${row.capacity.dayCapacity[i]})`}
-													</Table.DataCell>
-												))
-											: calc.columns.map((_d, i) => (
-													// biome-ignore lint/suspicious/noArrayIndexKey: ignore
-													<Table.DataCell align={"right"} key={`row${i}`}>
-														{showCapacity &&
-															row.capacity &&
-															`(${row.capacity.dayCapacity[i]})`}
-													</Table.DataCell>
-												))}
-										<Table.DataCell
-											align={"right"}
-											className={styles.stickyRight}
-										>
-											{row.rowValue}
-											{showCapacity && `(${row.capacity?.lumpCapacity || 0})`}
-										</Table.DataCell>
-										<Table.DataCell align={"right"} className={styles.sticky}>
-											{calc.sumColumn[index]}{" "}
-											{showCapacity && `(${capacitySum(row)})`}
-										</Table.DataCell>
-										<Table.DataCell
-											style={{ minWidth: "20px" }}
-											className={styles.sticky}
-										>
-											{row.ekstra && <ExtraInfoIcon data={row.ekstra} />}
-										</Table.DataCell>
-									</Table.Row>
-								))}
+								{beregning.delperioder.map((calc) =>
+									calc.rows.map((row: Row, index: number) => (
+										<Table.Row key={row.rowName}>
+											<Table.HeaderCell
+												scope="row"
+												className={styles.stickyLeft}
+												style={{ maxWidth: "4em" }}
+											>
+												{row.rowName}
+											</Table.HeaderCell>
+											{row.columnValues.length !== 0
+												? row.columnValues.map((n: number, i: number) => (
+														// biome-ignore lint/suspicious/noArrayIndexKey: ignore
+														<Table.DataCell align={"right"} key={`row${i}`}>
+															{n}{" "}
+															{showCapacity &&
+																row.capacity &&
+																`(${row.capacity.dayCapacity[i]})`}
+														</Table.DataCell>
+													))
+												: calc.columns.map((_d, i) => (
+														// biome-ignore lint/suspicious/noArrayIndexKey: ignore
+														<Table.DataCell align={"right"} key={`row${i}`}>
+															{showCapacity &&
+																row.capacity &&
+																`(${row.capacity.dayCapacity[i]})`}
+														</Table.DataCell>
+													))}
+											<Table.DataCell
+												align={"right"}
+												className={styles.stickyRight}
+											>
+												{row.rowValue}
+												{showCapacity && `(${row.capacity?.lumpCapacity || 0})`}
+											</Table.DataCell>
+											<Table.DataCell align={"right"} className={styles.sticky}>
+												{calc.sumColumn[index]}{" "}
+												{showCapacity && `(${capacitySum(row)})`}
+											</Table.DataCell>
+											<Table.DataCell
+												style={{ minWidth: "20px" }}
+												className={styles.sticky}
+											>
+												{row.ekstra && <ExtraInfoIcon data={row.ekstra} />}
+											</Table.DataCell>
+										</Table.Row>
+									)),
+								)}
 								<Table.Row key={"Kapasitet"}>
 									<Table.HeaderCell scope="row" className={styles.stickyLeft}>
 										Kapasitet
 									</Table.HeaderCell>
-									{calc.sums.columnValues.map((n: number, i: number) => (
-										// biome-ignore lint/suspicious/noArrayIndexKey: ignore
-										<Table.DataCell align={"right"} key={`sumrow${i}`}>
-											{n}
-										</Table.DataCell>
+									{beregning.delperioder.map((calc) => (
+										<>
+											{calc.sums.columnValues.map((n: number, i: number) => (
+												// biome-ignore lint/suspicious/noArrayIndexKey: ignore
+												<Table.DataCell align={"right"} key={`sumrow${i}`}>
+													{n}
+												</Table.DataCell>
+											))}
+											<Table.DataCell
+												align={"right"}
+												key={`sumrowval`}
+												className={styles.stickyRight}
+											>
+												{calc.sums.rowValue}
+												{showCapacity &&
+													calc.sums.capacity &&
+													`(${calc.sums.capacity.lumpCapacity})`}
+											</Table.DataCell>
+											<Table.DataCell align={"right"} className={styles.sticky}>
+												{calc.sumColumn.reduce((a, b) => a + b, 0)}
+												{showCapacity &&
+													calc.sums.capacity &&
+													`(${calc.sums.capacity.lumpCapacity + calc.sums.columnValues.reduce((a, b) => a + b)})`}
+											</Table.DataCell>
+										</>
 									))}
-									<Table.DataCell
-										align={"right"}
-										key={`sumrowval`}
-										className={styles.stickyRight}
-									>
-										{calc.sums.rowValue}
-										{showCapacity &&
-											calc.sums.capacity &&
-											`(${calc.sums.capacity.lumpCapacity})`}
-									</Table.DataCell>
-									<Table.DataCell align={"right"} className={styles.sticky}>
-										{calc.sumColumn.reduce((a, b) => a + b, 0)}
-										{showCapacity &&
-											calc.sums.capacity &&
-											`(${calc.sums.capacity.lumpCapacity + calc.sums.columnValues.reduce((a, b) => a + b)})`}
-									</Table.DataCell>
 								</Table.Row>
 							</Table.Body>
 						</Table>
@@ -146,7 +153,7 @@ const BeregningsTabell: React.FC<{
 						<Button
 							variant={"secondary-neutral"}
 							onClick={() => {
-								const csvString = generateCsv(calc);
+								const csvString = generateCsv(beregning);
 								const blob = new Blob([csvString], {
 									type: "text/csv;charset=utf-8;",
 								});
