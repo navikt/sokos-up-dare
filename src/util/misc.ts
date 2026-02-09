@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import type {
 	Beregning,
+	Delperiode,
 	ExtraInfo,
 	OverstyrtSkatteKortExtraInfo,
 	ProsentExtraInfo,
@@ -24,7 +25,13 @@ export function capitalize(str: string) {
 	return str[0].toUpperCase() + str.slice(1);
 }
 
-export function generateCsv(calc: Beregning): string {
+export function generateCsv(beregning: Beregning) {
+	return beregning.delperioder
+		.map((dp) => generateCsvDelperiode(dp))
+		.join("\n\n");
+}
+
+export function generateCsvDelperiode(calc: Delperiode): string {
 	function formatMetaData(info: ExtraInfo | object) {
 		const extraInfo = info as ExtraInfo;
 		switch (extraInfo.type) {
