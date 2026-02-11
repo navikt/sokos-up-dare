@@ -15,8 +15,8 @@ importers:
         specifier: ^2.2.2
         version: 2.2.2
       '@navikt/aksel-icons':
-        specifier: ^7.40.0
-        version: 7.40.0
+        specifier: ^8.3.0
+        version: 8.3.0
       '@navikt/ds-css':
         specifier: ^7.40.0
         version: 7.40.0
@@ -545,6 +545,9 @@ packages:
 
   '@navikt/aksel-icons@7.40.0':
     resolution: {integrity: sha512-1xuhplMhKCEPn2iMFypMVgkRNxUd5iupQ7HP2itdQCkK3K2mm2b8HsDwL9d7YDWcxowq5ff7ewpKgQFPn6o1UQ==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/7.40.0/16d67c0742bcf2a2c38ad37be6c287765640fd7f}
+
+  '@navikt/aksel-icons@8.3.0':
+    resolution: {integrity: sha512-IDwQLQqOZiUH78g1nnvNl06m+1B4rDn1o0E747Xe9IuqQgX2qafr6HAe5g0WUxCe2y6O6uxAcOoHFZlyXqeIcg==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-icons/8.3.0/371336d2d5b195c2312454eebef9ee36148017aa}
 
   '@navikt/aksel-stylelint@7.40.0':
     resolution: {integrity: sha512-9g70rCPnKTsFDQ3UDYt+whwu+8M/cp0cMvGg2BYOzMiMLHcwpoOyIQBewGZVZXPl5jVJBDX7vgIak1gL5d+gGg==, tarball: https://npm.pkg.github.com/download/@navikt/aksel-stylelint/7.40.0/71a01496f275de0df96305e74e8ec1bbe22bf60a}
@@ -2232,6 +2235,8 @@ snapshots:
       strict-event-emitter: 0.5.1
 
   '@navikt/aksel-icons@7.40.0': {}
+
+  '@navikt/aksel-icons@8.3.0': {}
 
   '@navikt/aksel-stylelint@7.40.0': {}
 
