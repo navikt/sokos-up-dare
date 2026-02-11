@@ -20,7 +20,7 @@
 		"@grafana/faro-web-sdk": "^2.2.2",
 		"@navikt/aksel-icons": "^7.40.0",
 		"@navikt/ds-css": "^7.40.0",
-		"@navikt/ds-react": "^7.40.0",
+		"@navikt/ds-react": "^8.3.0",
 		"axios": "^1.13.5",
 		"luxon": "^3.7.2",
 		"lz-string": "^1.5.0",
