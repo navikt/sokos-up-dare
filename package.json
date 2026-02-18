@@ -19,7 +19,7 @@
 		"@axe-core/playwright": "^4.11.1",
 		"@grafana/faro-web-sdk": "^2.2.3",
 		"@navikt/aksel-icons": "^7.40.0",
-		"@navikt/ds-css": "^7.40.0",
+		"@navikt/ds-css": "^8.5.0",
 		"@navikt/ds-react": "^7.40.0",
 		"axios": "^1.13.5",
 		"luxon": "^3.7.2",
