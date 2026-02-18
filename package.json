@@ -33,7 +33,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.0",
-		"@navikt/aksel-stylelint": "^7.40.0",
+		"@navikt/aksel-stylelint": "^8.5.0",
 		"@playwright/test": "^1.58.2",
 		"@rollup/plugin-terser": "^0.4.4",
 		"@types/luxon": "^3.7.1",
