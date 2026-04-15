@@ -1,7 +1,8 @@
 // Dette er en template for en dynamisk form som lager input felter for elementer med {foo} i seg hvor {foo} angir en løs type.
 // De blir erstattet før templates postes til backend.
 
-export const oppdragsXmlTypedTemplate = `<oppdrag-110>
+export const oppdragsXmlTypedTemplate = `<oppdrag>
+<oppdrag-110>
     <kodeAksjon>1</kodeAksjon>
     <kodeEndring>NY</kodeEndring>
     <kodeFagomraade>AAP</kodeFagomraade>
@@ -43,4 +44,5 @@ export const oppdragsXmlTypedTemplate = `<oppdrag-110>
             <attestantId>Kelvin</attestantId>
         </attestant-180>
     </oppdrags-linje-150>
-</oppdrag-110>`;
+</oppdrag-110>
+</oppdrag>`;
