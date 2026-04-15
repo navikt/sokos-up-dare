@@ -37,31 +37,18 @@ function templateField(s: string): NamedField | null {
 export function fillTypedTemplate(
 	template: string,
 	fields: NamedField[],
+	values: Record<string, string>,
 ): string {
 	let result = template;
-	// biome-ignore lint/suspicious/noConsole: <explanation>
 
 	for (const field of fields) {
-		// biome-ignore lint/suspicious/noConsole: <explanation>
-		console.log(" Replace ", field);
-
 		const pattern = new RegExp(
 			`(<${field.name}>)(.*?)\\{${field.kind}\\}(<\\/${field.name}>)`,
 		);
-
 		const val =
-			field.kind === "dato"
-				? formatXmlDate(field.value)
-				: (field.value ?? `{${field.kind}}`);
-
-		// biome-ignore lint/suspicious/noConsole: <explanation>
-		console.log(
-			`(<${field.name}>)(.*?)\\{${field.kind}\\}(<\\/${field.name}>)`,
-			`$1${val}$3`,
-			field.name,
-			field.kind,
-			val,
-		);
+			(field.kind === "dato"
+				? formatXmlDate(values[field.name])
+				: values[field.name]) || field.value;
 
 		result = result.replace(pattern, `$1${val}$3`);
 	}
