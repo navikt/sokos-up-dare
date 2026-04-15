@@ -7,7 +7,7 @@ export const oppdragsXmlTypedTemplate = `<oppdrag-110>
     <kodeFagomraade>AAP</kodeFagomraade>
     <fagsystemId>4Mi993K</fagsystemId>
     <utbetFrekvens>MND</utbetFrekvens>
-    <oppdragGjelderId>4432423{pnr}</oppdragGjelderId>
+    <oppdragGjelderId>09117231396{pnr}</oppdragGjelderId>
     <datoOppdragGjelderFom>2000-01-01+01:00</datoOppdragGjelderFom>
     <saksbehId>Kelvin</saksbehId>
     <avstemming-115>
@@ -32,7 +32,7 @@ export const oppdragsXmlTypedTemplate = `<oppdrag-110>
         <typeSats>DAG</typeSats>
         <brukKjoreplan>N</brukKjoreplan>
         <saksbehId>Kelvin</saksbehId>
-        <utbetalesTilId>{pnr}</utbetalesTilId>
+        <utbetalesTilId>09117231396{pnr}</utbetalesTilId>
         <henvisning>fElbky3XRjik9hEWF9/N4w==</henvisning>
         <refFagsystemId>4Mi993K</refFagsystemId>
         <refDelytelseId>l+Zwfa15Q52nLauwP2CI1Q==</refDelytelseId>

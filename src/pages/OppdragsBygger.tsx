@@ -28,7 +28,7 @@ import { useLocation, useNavigate } from "react-router";
 import { postOppdragXML } from "../api/apiService";
 import BeregningsTabell from "../components/BeregningsTabell";
 import DynamicForm from "../components/DynamicForm";
-import { oppdragsXmlTypedTemplate } from "../data/oppdragsXmlTemplate2";
+import { oppdragsXmlTypedTemplate } from "../data/oppdragsXmlTypedTemplate";
 import type { Beregning } from "../types/Beregning";
 import type { FetchState } from "../types/FetchState";
 import { fillTypedTemplate, templateFields } from "../util/template";
