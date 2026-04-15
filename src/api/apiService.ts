@@ -13,6 +13,20 @@ const BASE_URI = {
 
 const locale = navigator.languages?.[0] || navigator.language;
 
+export async function postOppdrag(xml: string): Promise<Beregning> {
+	return await axiosPostFetcher<string, Beregning>(
+		BASE_URI.BACKEND_API,
+		"/oppdrag/2.5",
+		xml,
+		{
+			headers: {
+				"Content-Type": "text/xml",
+				"Accept-Language": locale,
+			},
+		},
+	);
+}
+
 export async function testCalculation(
 	beregning: Testberegning,
 	range?: DateRange,
@@ -32,7 +46,7 @@ export async function testCalculation(
 	);
 }
 
-export async function postOppdrag(
+export async function postTestOppdrag(
 	setState: Dispatch<SetStateAction<FetchState<Beregning>>>,
 	test: Testberegning,
 	range: DateRange | undefined,
@@ -40,6 +54,27 @@ export async function postOppdrag(
 	setState({ status: "loading" });
 	try {
 		const responseBody = await testCalculation(test, range);
+		const response = BeregningSchema.safeParse(responseBody);
+		if (!response.success) {
+			// biome-ignore lint/suspicious/noConsole: ignore
+			console.log("Error parsing ", response.error, responseBody);
+			setState({ status: "error", error: "Feil i resultat" });
+		} else {
+			const beregning = BeregningSchema.parse(response.data);
+			setState({ status: "success", data: beregning });
+		}
+	} catch (err) {
+		setState({ status: "error", error: (err as Error).message });
+	}
+}
+
+export async function postOppdragXML(
+	setState: Dispatch<SetStateAction<FetchState<Beregning>>>,
+	xml: string,
+) {
+	setState({ status: "loading" });
+	try {
+		const responseBody = await postOppdrag(xml);
 		const response = BeregningSchema.safeParse(responseBody);
 		if (!response.success) {
 			// biome-ignore lint/suspicious/noConsole: ignore
