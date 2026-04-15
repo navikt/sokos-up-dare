@@ -26,7 +26,7 @@ import {
 } from "lz-string";
 import { startTransition, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { postTestOppdrag } from "../api/apiService";
+import { postOppdrag } from "../api/apiService";
 import BeregningsTabell from "../components/BeregningsTabell";
 import DatoFelt from "../components/DatoFelt";
 import SkattekortForm from "../components/SkattekortForm";
@@ -79,7 +79,7 @@ export const Oppdrag = () => {
 			from: new Date(formData.datoVedtakFom),
 			to: new Date(formData.datoVedtakTom),
 		};
-		postTestOppdrag(setState, testberegning, range);
+		postOppdrag(setState, testberegning, range);
 	};
 
 	const [formData, setFormData] = useState<Oppdragsbeskrivelse>(() => {
