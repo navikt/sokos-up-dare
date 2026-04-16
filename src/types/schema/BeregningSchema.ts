@@ -41,7 +41,7 @@ export const BeregningSchema = z.object({
 	overfoeres: z.string().optional(),
 	kid: z.string().optional(),
 	bankkonto: z.string().optional(),
-	oppdrag: z.string().optional(),
+	oppdrag: z.number().optional(),
 	utbetalesTil: z.number().optional(),
 	refunderesTil: z.number().optional(),
 	delperioder: z.array(DelperiodeSchema),
