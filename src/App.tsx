@@ -2,6 +2,8 @@ import { type JSX, useEffect } from "react";
 import { BrowserRouter, Route, Routes, useRouteError } from "react-router";
 import Beregne from "./pages/Beregne";
 import { Oppdrag } from "./pages/Oppdrag";
+import { OppdragsBygger } from "./pages/OppdragsBygger";
+import Poc from "./pages/Poc";
 import { initGrafanaFaro } from "./util/grafanaFaro";
 
 export default function App() {
@@ -14,7 +16,9 @@ export default function App() {
 		<BrowserRouter basename={"/dare"}>
 			<Routes>
 				<Route path={"/"} ErrorBoundary={ErrorBoundary}>
-					<Route path={"/"} element={<Beregne />} />
+					<Route path={"/"} element={<Poc />} />
+					<Route path={"/testberegning"} element={<Beregne />} />
+					<Route path={"/oppdrag"} element={<OppdragsBygger />} />
 					<Route path={"/form"} element={<Oppdrag />} />
 				</Route>
 			</Routes>

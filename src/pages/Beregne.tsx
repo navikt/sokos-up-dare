@@ -15,7 +15,7 @@ import {
 	VStack,
 } from "@navikt/ds-react";
 import { startTransition, useState } from "react";
-import { postOppdrag } from "../api/apiService";
+import { postTestOppdrag } from "../api/apiService";
 import BeregningsTabell from "../components/BeregningsTabell";
 import { exampleXml } from "../data/exampleXml";
 import type { Beregning } from "../types/Beregning";
@@ -41,7 +41,7 @@ export default function Beregne() {
 			skattetrekkType: "prosenttrekk",
 			prosentSats: "50",
 		};
-		postOppdrag(setState, testOppdrag, selectedRange);
+		postTestOppdrag(setState, testOppdrag, selectedRange);
 	};
 
 	return (
