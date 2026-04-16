@@ -16,7 +16,7 @@ const locale = navigator.languages?.[0] || navigator.language;
 export async function postOppdrag(xml: string): Promise<Beregning> {
 	return await axiosPostFetcher<string, Beregning>(
 		BASE_URI.BACKEND_API,
-		"/oppdrag/2.5",
+		"/beregning/oppdrag",
 		xml,
 		{
 			headers: {
