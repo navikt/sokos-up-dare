@@ -12,6 +12,7 @@ import {
 	Box,
 	Button,
 	Heading,
+	HelpText,
 	HStack,
 	Loader,
 	Modal,
@@ -34,7 +35,9 @@ import type { FetchState } from "../types/FetchState";
 import { fillTypedTemplate, templateFields } from "../util/template";
 import styles from "./TemplatePage.module.css";
 
-const initialState: Record<string, string> = {};
+const initialState: Record<string, string> = {
+	textAreaData: oppdragsXmlTypedTemplate,
+};
 
 const labels: Record<string, string> = {
 	datoVedtakFom: "Fra dato",
@@ -53,21 +56,7 @@ export const OppdragsBygger = () => {
 	const [copying, setCopying] = useState<boolean>(false);
 	const [modalContent, setModalContent] = useState<string>("");
 	const [showCapacity, setShowCapacity] = useState<boolean>(false);
-	const [textAreaData, setTextArea] = useState<string>(
-		oppdragsXmlTypedTemplate,
-	);
-
-	const namedFields = useMemo(
-		() => templateFields(textAreaData),
-		[textAreaData],
-	);
-
 	const [warn, setWarn] = useState<string>("");
-
-	const handleSubmit = () => {
-		const oppdragsXml = filledTemplate();
-		postOppdragXML(setState, oppdragsXml);
-	};
 
 	const [formData, setFormData] = useState<Record<string, string>>(() => {
 		const params = new URLSearchParams(location.search);
@@ -81,8 +70,18 @@ export const OppdragsBygger = () => {
 		return initialState;
 	});
 
+	const namedFields = useMemo(
+		() => templateFields(formData.textAreaData),
+		[formData?.textAreaData],
+	);
+
+	const handleSubmit = () => {
+		const oppdragsXml = filledTemplate();
+		postOppdragXML(setState, oppdragsXml);
+	};
+
 	const filledTemplate = (): string => {
-		return fillTypedTemplate(textAreaData, namedFields, formData);
+		return fillTypedTemplate(formData.textAreaData, namedFields, formData);
 	};
 
 	useEffect(() => {
@@ -112,6 +111,7 @@ export const OppdragsBygger = () => {
 							title="Oppdragsbygger"
 							fontSize="3rem"
 						/>
+						<About />
 					</HStack>
 				</Heading>
 				{warn && (
@@ -133,8 +133,13 @@ export const OppdragsBygger = () => {
 								<Textarea
 									label="XML"
 									resize
-									value={textAreaData}
-									onChange={(e) => setTextArea(e.target.value)}
+									value={formData.textAreaData}
+									onChange={(e) => {
+										setFormData((prev) => ({
+											...prev,
+											textAreaData: e.target.value,
+										}));
+									}}
 								/>
 							</Box>
 						</VStack>
@@ -142,6 +147,7 @@ export const OppdragsBygger = () => {
 				</Accordion.Item>
 			</Accordion>
 
+			<h3>From:</h3>
 			<DynamicForm
 				fields={namedFields}
 				values={formData}
@@ -170,9 +176,18 @@ export const OppdragsBygger = () => {
 						<Button
 							variant="secondary"
 							disabled={state.status === "loading"}
+							onClick={() =>
+								setFormData({ textAreaData: formData.textAreaData })
+							}
+						>
+							Nullstill felter
+						</Button>
+						<Button
+							variant="secondary"
+							disabled={state.status === "loading"}
 							onClick={() => setFormData(initialState)}
 						>
-							Nullstill
+							Nullstill templat
 						</Button>
 					</HStack>
 					<HStack gap={"2"}>
@@ -265,3 +280,26 @@ export const OppdragsBygger = () => {
 		</div>
 	);
 };
+
+function About() {
+	return (
+		<HelpText title="Hva er dette?">
+			<div style={{ textAlign: "left" }}>
+				<h3>Hva er dette?</h3>
+				Under Oppdrag skjuler det seg en XML template.
+				<br />
+				<code>
+					&lt;Element&gt;verdi{"{"}type{"}"}&lt;/Element&gt;
+				</code>{" "}
+				blir til et editeringsfelt under med "verdi" som standardverdi og {"{"}
+				type{"}"} som type.
+				<br />
+				<br />
+				Det finnes kun to typer {"{"}dato{"}"} som blir til et datofelt, alt
+				annet blir til tekstfelt. Når du trykker på send oppdrag blir verdiene i
+				feltene lagt inn i templaten før den sendes til serveren. Du kan
+				forhåndsvise dette ved å trykke på vis XML eller med nedlastingsknappen.
+			</div>
+		</HelpText>
+	);
+}

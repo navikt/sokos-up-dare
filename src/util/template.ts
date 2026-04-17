@@ -25,7 +25,7 @@ export function templateFields(xml: string): NamedField[] {
 }
 
 function templateField(s: string): NamedField | null {
-	const match = s.match(/<([\w-]+)>(.*?)\{(\w+)\}<\/[\w-]+>/);
+	const match = s.match(/<([\w-]+)>(.*?)\{(\w+)}<\/[\w-]+>/);
 	if (!match) return null;
 	return {
 		name: match[1],
@@ -47,7 +47,7 @@ export function fillTypedTemplate(
 		);
 		const val =
 			(field.kind === "dato"
-				? formatXmlDate(values[field.name])
+				? formatXmlDate(values[field.name] || field.value)
 				: values[field.name]) || field.value;
 
 		result = result.replace(pattern, `$1${val}$3`);
