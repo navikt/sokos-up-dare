@@ -24,7 +24,7 @@ function Meny() {
 				icon={<WrenchIcon style={{ fontSize: "2rem" }} />}
 			/>
 			<MenyItem
-				path={"/dare/form"}
+				path={"/dare/beregninger"}
 				linkText="Utførte bereninger"
 				description="Se på utførte beregninger"
 				icon={<SackKronerIcon style={{ fontSize: "2rem" }} />}

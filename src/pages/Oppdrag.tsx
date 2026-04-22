@@ -20,13 +20,11 @@ import {
 	VStack,
 } from "@navikt/ds-react";
 import type { DateRange } from "@navikt/ds-react/src/date/Date.typeutils";
-import {
-	compressToEncodedURIComponent,
-	decompressFromEncodedURIComponent,
-} from "lz-string";
-import { startTransition, useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { decompressFromEncodedURIComponent } from "lz-string";
+import React, { startTransition, useRef, useState } from "react";
+import { useLocation } from "react-router";
 import { postTestOppdrag } from "../api/apiService";
+import Backbutton from "../components/Backbutton";
 import BeregningsTabell from "../components/BeregningsTabell";
 import DatoFelt from "../components/DatoFelt";
 import SkattekortForm from "../components/SkattekortForm";
@@ -41,6 +39,7 @@ import type { Trekk } from "../types/Trekk";
 import { formatXmlDate } from "../util/date";
 import { useFlaskBubbles } from "../util/misc";
 import { fillTemplate, flattenObject } from "../util/template";
+import { useCompressedQueryStateSync } from "../util/useCompressedQueryStateSync";
 import styles from "./TemplatePage.module.css";
 
 const currentYear = new Date().getFullYear();
@@ -59,7 +58,6 @@ const initialState: Oppdragsbeskrivelse = {
 
 export const Oppdrag = () => {
 	const location = useLocation();
-	const navigate = useNavigate();
 	const modalRef = useRef<HTMLDialogElement>(null);
 	const [state, setState] = useState<FetchState<Beregning>>({ status: "idle" });
 	const [copying, setCopying] = useState<boolean>(false);
@@ -125,26 +123,13 @@ export const Oppdrag = () => {
 		}
 	};
 
-	useEffect(() => {
-		const timeout = setTimeout(() => {
-			try {
-				const json = JSON.stringify(formData);
-				const compressed = compressToEncodedURIComponent(json);
-				const params = new URLSearchParams(location.search);
-				params.set("state", compressed);
-				navigate({ search: params.toString() }, { replace: true });
-			} catch {
-				// Never mind
-			}
-		}, 300); // debounce delay
-
-		return () => clearTimeout(timeout);
-	}, [formData, navigate, location.search]);
+	useCompressedQueryStateSync(formData, { key: "state", debounceMs: 300 });
 
 	useFlaskBubbles();
 
 	return (
 		<div className={styles["template-body"]}>
+			<Backbutton />
 			<div className={styles["template-header"]}>
 				<Heading spacing level="1" size="large">
 					<HStack justify={"center"} align={"center"} gap={"1"}>

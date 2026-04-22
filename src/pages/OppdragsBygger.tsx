@@ -20,19 +20,18 @@ import {
 	Textarea,
 	VStack,
 } from "@navikt/ds-react";
-import {
-	compressToEncodedURIComponent,
-	decompressFromEncodedURIComponent,
-} from "lz-string";
-import { startTransition, useEffect, useMemo, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { decompressFromEncodedURIComponent } from "lz-string";
+import React, { startTransition, useMemo, useRef, useState } from "react";
+import { useLocation } from "react-router";
 import { postOppdragXML } from "../api/apiService";
+import Backbutton from "../components/Backbutton";
 import BeregningsTabell from "../components/BeregningsTabell";
 import DynamicForm from "../components/DynamicForm";
 import { oppdragsXmlTypedTemplate } from "../data/oppdragsXmlTypedTemplate";
 import type { Beregning } from "../types/Beregning";
 import type { FetchState } from "../types/FetchState";
 import { fillTypedTemplate, templateFields } from "../util/template";
+import { useCompressedQueryStateSync } from "../util/useCompressedQueryStateSync";
 import styles from "./TemplatePage.module.css";
 
 const initialState: Record<string, string> = {
@@ -50,7 +49,6 @@ const labels: Record<string, string> = {
 
 export const OppdragsBygger = () => {
 	const location = useLocation();
-	const navigate = useNavigate();
 	const modalRef = useRef<HTMLDialogElement>(null);
 	const [state, setState] = useState<FetchState<Beregning>>({ status: "idle" });
 	const [copying, setCopying] = useState<boolean>(false);
@@ -84,24 +82,11 @@ export const OppdragsBygger = () => {
 		return fillTypedTemplate(formData.textAreaData, namedFields, formData);
 	};
 
-	useEffect(() => {
-		const timeout = setTimeout(() => {
-			try {
-				const json = JSON.stringify(formData);
-				const compressed = compressToEncodedURIComponent(json);
-				const params = new URLSearchParams(location.search);
-				params.set("state", compressed);
-				navigate({ search: params.toString() }, { replace: true });
-			} catch {
-				// Never mind
-			}
-		}, 300); // debounce delay
-
-		return () => clearTimeout(timeout);
-	}, [formData, navigate, location.search]);
+	useCompressedQueryStateSync(formData, { key: "state", debounceMs: 300 });
 
 	return (
 		<div className={styles["template-body"]}>
+			<Backbutton />
 			<div className={styles["template-header"]}>
 				<Heading spacing level="1" size="large">
 					<HStack justify={"center"} align={"center"} gap={"1"}>
