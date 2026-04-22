@@ -1,5 +1,13 @@
 import { DownloadIcon } from "@navikt/aksel-icons";
-import { Box, Button, HStack, Table, Tooltip, VStack } from "@navikt/ds-react";
+import {
+	Box,
+	Button,
+	HStack,
+	Link,
+	Table,
+	Tooltip,
+	VStack,
+} from "@navikt/ds-react";
 import type React from "react";
 import type { Beregning, Delperiode, Row } from "../types/Beregning";
 import { dateStringToWeekday } from "../util/date";
@@ -13,6 +21,45 @@ function capacitySum(row: Row) {
 		(row.capacity?.lumpCapacity || 0)
 	);
 }
+
+export const BeregningsTabellListe: React.FC<{ beregninger: Beregning[] }> = ({
+	beregninger,
+}) => {
+	return (
+		<Table zebraStripes>
+			<Table.Header>
+				<Table.Row>
+					<Table.HeaderCell scope="col">Fagområde</Table.HeaderCell>
+					<Table.HeaderCell scope="col">Beregning</Table.HeaderCell>
+					<Table.HeaderCell scope="col">Gjelder</Table.HeaderCell>
+					<Table.HeaderCell scope="col">Overføres</Table.HeaderCell>
+					<Table.HeaderCell scope="col">Bankkonto</Table.HeaderCell>
+					<Table.HeaderCell scope="col">Oppdrag</Table.HeaderCell>
+					<Table.HeaderCell scope="col">Beregnet</Table.HeaderCell>
+				</Table.Row>
+			</Table.Header>
+			<Table.Body>
+				{beregninger.map((b: Beregning) => {
+					return (
+						<Table.Row key={(b.id || 0) + b.gjelder + (b.oppdrag || 0)}>
+							<Table.DataCell>{b.fagomraade}</Table.DataCell>
+							<Table.DataCell>
+								<Link href={`/dare/beregning/${b.id}`}>{b.id}</Link>
+							</Table.DataCell>
+							<Table.DataCell>{b.gjelder}</Table.DataCell>
+							<Table.DataCell>{b.overfoeres}</Table.DataCell>
+							<Table.DataCell>{b.bankkonto}</Table.DataCell>
+							<Table.DataCell>{b.oppdrag}</Table.DataCell>
+							<Table.DataCell>
+								{new Date(b.beregnet).toLocaleDateString()}
+							</Table.DataCell>
+						</Table.Row>
+					);
+				})}
+			</Table.Body>
+		</Table>
+	);
+};
 
 const BeregningsTabell: React.FC<{
 	beregning: Beregning;

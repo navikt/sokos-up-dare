@@ -46,4 +46,8 @@ export const BeregningSchema = z.object({
 	refunderesTil: z.number().optional(),
 	delperioder: z.array(DelperiodeSchema),
 	beloepTilUtbetaling: z.number(),
+	beregnet: z.string(),
+	id: z.number().optional(),
 });
+
+export const BeregningListSchema = z.array(BeregningSchema);

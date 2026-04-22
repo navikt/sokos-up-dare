@@ -1,6 +1,8 @@
 import { type JSX, useEffect } from "react";
 import { BrowserRouter, Route, Routes, useRouteError } from "react-router";
 import Beregne from "./pages/Beregne";
+import Beregninger from "./pages/Beregninger";
+import Beregningsdetailjer from "./pages/Beregningsdetailjer";
 import { Oppdrag } from "./pages/Oppdrag";
 import { OppdragsBygger } from "./pages/OppdragsBygger";
 import Poc from "./pages/Poc";
@@ -20,6 +22,8 @@ export default function App() {
 					<Route path={"/testberegning"} element={<Beregne />} />
 					<Route path={"/oppdrag"} element={<OppdragsBygger />} />
 					<Route path={"/form"} element={<Oppdrag />} />
+					<Route path={"/beregninger"} element={<Beregninger />} />
+					<Route path={"/beregning/:id"} element={<Beregningsdetailjer />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

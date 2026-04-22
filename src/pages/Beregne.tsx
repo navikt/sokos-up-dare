@@ -14,8 +14,9 @@ import {
 	useRangeDatepicker,
 	VStack,
 } from "@navikt/ds-react";
-import { startTransition, useState } from "react";
+import React, { startTransition, useState } from "react";
 import { postTestOppdrag } from "../api/apiService";
+import Backbutton from "../components/Backbutton";
 import BeregningsTabell from "../components/BeregningsTabell";
 import { exampleXml } from "../data/exampleXml";
 import type { Beregning } from "../types/Beregning";
@@ -46,6 +47,7 @@ export default function Beregne() {
 
 	return (
 		<div className={styles["template-body"]}>
+			<Backbutton />
 			<div className={styles["template-header"]}>
 				<Heading spacing level="1" size="large">
 					Dare POC - Mikrofrontend
