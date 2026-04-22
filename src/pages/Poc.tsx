@@ -25,7 +25,7 @@ function Meny() {
 			/>
 			<MenyItem
 				path={"/dare/beregninger"}
-				linkText="Utførte bereninger"
+				linkText="Utførte beregninger"
 				description="Se på utførte beregninger"
 				icon={<SackKronerIcon style={{ fontSize: "2rem" }} />}
 			/>
