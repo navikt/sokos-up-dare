@@ -32,7 +32,10 @@ import TrekkListe, { nyttTrekk } from "../components/TrekkForm";
 import { oppdragsXmlTemplate } from "../data/oppdragsXmlTemplate";
 import type { Beregning } from "../types/Beregning";
 import type { FetchState } from "../types/FetchState";
-import type { Oppdragsbeskrivelse } from "../types/Oppdragsbeskrivelse";
+import type {
+	FormVersion,
+	Oppdragsbeskrivelse,
+} from "../types/Oppdragsbeskrivelse";
 import type { Skattetrekk } from "../types/Skattetrekk";
 import type { Testberegning } from "../types/Testberegning";
 import type { Trekk } from "../types/Trekk";
@@ -44,7 +47,7 @@ import styles from "./TemplatePage.module.css";
 
 const currentYear = new Date().getFullYear();
 
-const initialState: Oppdragsbeskrivelse = {
+const initialState = (): Oppdragsbeskrivelse & FormVersion => ({
 	vedtaksSats: 800,
 	sats: 800,
 	skattekort: {
@@ -54,7 +57,8 @@ const initialState: Oppdragsbeskrivelse = {
 	},
 	datoVedtakFom: `${currentYear}-03-31`,
 	datoVedtakTom: `${currentYear}-04-11`,
-};
+	formVersion: crypto.randomUUID(),
+});
 
 export const Oppdrag = () => {
 	const location = useLocation();
@@ -80,17 +84,19 @@ export const Oppdrag = () => {
 		postTestOppdrag(setState, testberegning, range);
 	};
 
-	const [formData, setFormData] = useState<Oppdragsbeskrivelse>(() => {
-		const params = new URLSearchParams(location.search);
-		const compressedState = params.get("state");
+	const [formData, setFormData] = useState<Oppdragsbeskrivelse & FormVersion>(
+		() => {
+			const params = new URLSearchParams(location.search);
+			const compressedState = params.get("state");
 
-		if (compressedState) {
-			const json = decompressFromEncodedURIComponent(compressedState);
-			if (json) return JSON.parse(json);
-			setWarn("Form resatt pga. ugyldig tilstand.");
-		}
-		return initialState;
-	});
+			if (compressedState) {
+				const json = decompressFromEncodedURIComponent(compressedState);
+				if (json) return JSON.parse(json);
+				setWarn("Form resatt pga. ugyldig tilstand.");
+			}
+			return initialState();
+		},
+	);
 
 	const filledTemplate = (): string => {
 		const templateParams = {
@@ -212,6 +218,7 @@ export const Oppdrag = () => {
 							<DateWarning />
 						</Heading>
 						<DatoFelt
+							key={`datoVedtakFom:${formData.formVersion}`}
 							label={"Fra og med"}
 							value={formData.datoVedtakFom}
 							update={(value: string) =>
@@ -219,6 +226,7 @@ export const Oppdrag = () => {
 							}
 						/>
 						<DatoFelt
+							key={`datoVedtakTom:${formData.formVersion}`}
 							label={"Til og med"}
 							value={formData.datoVedtakTom}
 							update={(value: string) =>
@@ -268,7 +276,7 @@ export const Oppdrag = () => {
 						<Button
 							variant="secondary"
 							disabled={state.status === "loading"}
-							onClick={() => setFormData(initialState)}
+							onClick={() => setFormData(initialState())}
 						>
 							Nullstill
 						</Button>

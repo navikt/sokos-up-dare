@@ -17,10 +17,11 @@ const now = new Date();
 const beginningOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
-const initialState: Record<string, string> = {
+const initialState = (): Record<string, string> => ({
 	datoFom: formatDate(beginningOfMonth) || "2026-05-01",
 	datoTom: formatDate(endOfMonth) || "2026-05-30",
-};
+	formVersion: crypto.randomUUID(),
+});
 
 export default function Beregninger() {
 	const location = useLocation();
@@ -38,7 +39,7 @@ export default function Beregninger() {
 			if (json) return JSON.parse(json);
 			setWarn("Form resatt pga. ugyldig tilstand.");
 		}
-		return initialState;
+		return initialState();
 	});
 
 	const update = (updatedState: Record<string, string>) => {
@@ -70,6 +71,7 @@ export default function Beregninger() {
 			</div>
 			<HStack gap="space-16">
 				<DatoFelt
+					key={`datofom:${formData.formVersion}`}
 					label={"Fra og med"}
 					value={formData.datoFom}
 					update={(e) => {
@@ -77,6 +79,7 @@ export default function Beregninger() {
 					}}
 				/>
 				<DatoFelt
+					key={`datotom:${formData.formVersion}`}
 					label={"Til og med"}
 					value={formData.datoTom}
 					update={(e) => {
@@ -88,7 +91,7 @@ export default function Beregninger() {
 						<Button
 							variant="secondary"
 							disabled={state.status === "loading"}
-							onClick={() => setFormData(initialState)}
+							onClick={() => setFormData(initialState())}
 						>
 							Nullstill
 						</Button>
