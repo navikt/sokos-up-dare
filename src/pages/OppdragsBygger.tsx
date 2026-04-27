@@ -34,9 +34,10 @@ import { fillTypedTemplate, templateFields } from "../util/template";
 import { useCompressedQueryStateSync } from "../util/useCompressedQueryStateSync";
 import styles from "./TemplatePage.module.css";
 
-const initialState: Record<string, string> = {
+const initialState = (): Record<string, string> => ({
 	textAreaData: oppdragsXmlTypedTemplate,
-};
+	formVersion: crypto.randomUUID(),
+});
 
 const labels: Record<string, string> = {
 	datoVedtakFom: "Fra dato",
@@ -65,7 +66,7 @@ export const OppdragsBygger = () => {
 			if (json) return JSON.parse(json);
 			setWarn("Form resatt pga. ugyldig tilstand.");
 		}
-		return initialState;
+		return initialState();
 	});
 
 	const namedFields = useMemo(
@@ -162,7 +163,10 @@ export const OppdragsBygger = () => {
 							variant="secondary"
 							disabled={state.status === "loading"}
 							onClick={() =>
-								setFormData({ textAreaData: formData.textAreaData })
+								setFormData({
+									textAreaData: formData.textAreaData,
+									formVersion: crypto.randomUUID(),
+								})
 							}
 						>
 							Nullstill felter
@@ -170,7 +174,7 @@ export const OppdragsBygger = () => {
 						<Button
 							variant="secondary"
 							disabled={state.status === "loading"}
-							onClick={() => setFormData(initialState)}
+							onClick={() => setFormData(initialState())}
 						>
 							Nullstill templat
 						</Button>

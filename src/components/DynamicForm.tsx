@@ -24,7 +24,7 @@ const DynamicForm: React.FC<Props> = ({
 				if (field.kind === "dato") {
 					return (
 						<DatoFelt
-							key={field.name}
+							key={`${field.name}:${values.formVersion}`}
 							label={getLabel(field.name)}
 							value={value}
 							update={(v) => onChange(field.name, v)}

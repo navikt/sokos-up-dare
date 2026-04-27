@@ -3,6 +3,8 @@ import type { OppdragsbeskrivelseSchema } from "./schema/Oppdragsbeskrivelse";
 
 export type Oppdragsbeskrivelse = z.infer<typeof OppdragsbeskrivelseSchema>;
 
+export type FormVersion = { formVersion: string };
+
 export const skattetabeller = [
 	"0100",
 	"6300",
