@@ -1,6 +1,6 @@
-import type { DateRange } from "@navikt/ds-react/src/date/Date.typeutils";
 import type { Dispatch, SetStateAction } from "react";
 import type { Beregning } from "../types/Beregning";
+import type { DateRange } from "../types/DateRange";
 import type { FetchState } from "../types/FetchState";
 import {
 	BeregningListSchema,

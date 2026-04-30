@@ -19,7 +19,6 @@ import {
 	TextField,
 	VStack,
 } from "@navikt/ds-react";
-import type { DateRange } from "@navikt/ds-react/src/date/Date.typeutils";
 import { decompressFromEncodedURIComponent } from "lz-string";
 import React, { startTransition, useRef, useState } from "react";
 import { useLocation } from "react-router";
@@ -31,6 +30,7 @@ import SkattekortForm from "../components/SkattekortForm";
 import TrekkListe, { nyttTrekk } from "../components/TrekkForm";
 import { oppdragsXmlTemplate } from "../data/oppdragsXmlTemplate";
 import type { Beregning } from "../types/Beregning";
+import type { DateRange } from "../types/DateRange";
 import type { FetchState } from "../types/FetchState";
 import type {
 	FormVersion,
