@@ -1,7 +1,7 @@
 import { HttpResponse, http } from "msw";
 
 export const handlers = [
-	http.post("/dare-poc-api/api/beregning/test", () => {
+	http.post("/dare-poc-api/api/beregning/1/test", () => {
 		return HttpResponse.json({
 			columns: [
 				"2025-03-31",
