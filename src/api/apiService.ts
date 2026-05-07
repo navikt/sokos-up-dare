@@ -19,7 +19,7 @@ const locale = navigator.languages?.[0] || navigator.language;
 export async function postOppdrag(xml: string): Promise<Beregning> {
 	return await axiosPostFetcher<string, Beregning>(
 		BASE_URI.BACKEND_API,
-		"/beregning/oppdrag",
+		"/beregning/1/oppdrag",
 		xml,
 		{
 			headers: {
@@ -36,7 +36,7 @@ export async function testCalculation(
 ): Promise<Beregning> {
 	return await axiosPostFetcher<string, Beregning>(
 		BASE_URI.BACKEND_API,
-		"/beregning/test",
+		"/beregning/1/test",
 		JSON.stringify(beregning),
 		{
 			headers: {
