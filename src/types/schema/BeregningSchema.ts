@@ -11,9 +11,7 @@ export const RowSchema = z.object({
 	rowValue: z.number(),
 	columnValues: z.array(z.number()),
 	capacity: CapacitySchema.optional(),
-	ekstra: z
-		.array(z.union([ExtraInfoSchema, z.object({}).passthrough()]))
-		.optional(),
+	ekstra: z.array(ExtraInfoSchema).optional(),
 });
 
 export const DatoIntervallSchema = z.object({
