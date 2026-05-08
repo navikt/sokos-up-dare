@@ -24,12 +24,12 @@ import React, { startTransition, useRef, useState } from "react";
 import { useLocation } from "react-router";
 import { postTestOppdrag } from "../api/apiService";
 import Backbutton from "../components/Backbutton";
-import BeregningsTabell from "../components/BeregningsTabell";
+import { Beregningskontekst } from "../components/Beregningskontekst";
 import DatoFelt from "../components/DatoFelt";
 import SkattekortForm from "../components/SkattekortForm";
 import TrekkListe, { nyttTrekk } from "../components/TrekkForm";
 import { oppdragsXmlTemplate } from "../data/oppdragsXmlTemplate";
-import type { Beregning } from "../types/Beregning";
+import type { Beregningspresentasjon } from "../types/Beregning";
 import type { DateRange } from "../types/DateRange";
 import type { FetchState } from "../types/FetchState";
 import type {
@@ -63,7 +63,9 @@ const initialState = (): Oppdragsbeskrivelse & FormVersion => ({
 export const Oppdrag = () => {
 	const location = useLocation();
 	const modalRef = useRef<HTMLDialogElement>(null);
-	const [state, setState] = useState<FetchState<Beregning>>({ status: "idle" });
+	const [state, setState] = useState<FetchState<Beregningspresentasjon>>({
+		status: "idle",
+	});
 	const [copying, setCopying] = useState<boolean>(false);
 	const [modalContent, setModalContent] = useState<string>("");
 	const [warn, setWarn] = useState<string>("");
@@ -361,8 +363,8 @@ export const Oppdrag = () => {
 						<Alert variant={"error"}> Noe gikk galt: {state.error} </Alert>
 					)}
 					{state.status === "success" && (
-						<BeregningsTabell
-							beregning={state.data}
+						<Beregningskontekst
+							beregningspresentasjon={state.data}
 							showCapacity={showCapacity}
 						/>
 					)}

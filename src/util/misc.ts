@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import type { Beregning, Delperiode, ExtraInfo, Row } from "../types/Beregning";
+import type {
+	Beregning,
+	Delberegning,
+	ExtraInfo,
+	Row,
+} from "../types/Beregning";
 
 export const sum = (arr: number[]) => arr.reduce((a, b) => a + b, 0);
 
@@ -17,12 +22,12 @@ export function capitalize(str: string) {
 }
 
 export function generateCsv(beregning: Beregning) {
-	return beregning.delperioder
+	return beregning.delberegninger
 		.map((dp) => generateCsvDelperiode(dp))
 		.join("\n\n");
 }
 
-export function generateCsvDelperiode(calc: Delperiode): string {
+export function generateCsvDelperiode(calc: Delberegning): string {
 	function formatMetaData(info: ExtraInfo | object) {
 		const extraInfo = info as ExtraInfo;
 		switch (extraInfo.type) {

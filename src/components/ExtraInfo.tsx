@@ -27,20 +27,16 @@ const KeyValTableRow: React.FC<{
 };
 
 const ExtraInfoTable: React.FC<{ info: ExtraInfo }> = ({ info }) => {
-	const visibleVerdier = Object.entries(info.verdier).filter(
-		([, value]) => !value.skjult,
-	);
-
 	return (
 		<VStack gap="2">
 			<Heading level="2" size="small">
 				{label(info.grunn)}
 			</Heading>
 			<BodyShort>{info.tekst}</BodyShort>
-			{visibleVerdier.length > 0 && (
+			{info.verdier && (
 				<Table size="small">
 					<Table.Body>
-						{visibleVerdier.map(([name, value]) => (
+						{Object.entries(info.verdier).map(([name, value]) => (
 							<KeyValTableRow key={name} field={name} value={value} />
 						))}
 					</Table.Body>

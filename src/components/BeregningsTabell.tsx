@@ -9,7 +9,7 @@ import {
 	VStack,
 } from "@navikt/ds-react";
 import type React from "react";
-import type { Beregning, Delperiode, Row } from "../types/Beregning";
+import type { Beregning, Delberegning, Row } from "../types/Beregning";
 import { dateStringToWeekday } from "../util/date";
 import { generateCsv } from "../util/misc";
 import styles from "./beregningsTabell.module.css";
@@ -80,7 +80,7 @@ const BeregningsTabell: React.FC<{
 									<Table.HeaderCell scope="col" className={styles.stickyLeft}>
 										Dag
 									</Table.HeaderCell>
-									{beregning.delperioder.map((calc: Delperiode) =>
+									{beregning.delberegninger.map((calc: Delberegning) =>
 										calc.columns.map((date) => (
 											<Table.HeaderCell align={"right"} key={date} scope="col">
 												<Tooltip
@@ -114,7 +114,7 @@ const BeregningsTabell: React.FC<{
 								</Table.Row>
 							</Table.Header>
 							<Table.Body>
-								{beregning.delperioder.map((calc) =>
+								{beregning.delberegninger.map((calc) =>
 									calc.rows.map((row: Row, index: number) => (
 										<Table.Row key={row.rowName}>
 											<Table.HeaderCell
@@ -166,7 +166,7 @@ const BeregningsTabell: React.FC<{
 									<Table.HeaderCell scope="row" className={styles.stickyLeft}>
 										Kapasitet
 									</Table.HeaderCell>
-									{beregning.delperioder.map((calc) => (
+									{beregning.delberegninger.map((calc) => (
 										<>
 											{calc.sums.columnValues.map((n: number, i: number) => (
 												// biome-ignore lint/suspicious/noArrayIndexKey: ignore

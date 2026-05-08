@@ -1,10 +1,11 @@
 import type { Dispatch, SetStateAction } from "react";
-import type { Beregning } from "../types/Beregning";
+import type { Beregning, Beregningspresentasjon } from "../types/Beregning";
 import type { DateRange } from "../types/DateRange";
 import type { FetchState } from "../types/FetchState";
 import {
 	BeregningListSchema,
 	BeregningSchema,
+	BeregningspresentasjonSchema,
 } from "../types/schema/BeregningSchema";
 import type { Testberegning } from "../types/Testberegning";
 import formatDate from "../util/date";
@@ -16,10 +17,12 @@ const BASE_URI = {
 
 const locale = navigator.languages?.[0] || navigator.language;
 
-export async function postOppdrag(xml: string): Promise<Beregning> {
-	return await axiosPostFetcher<string, Beregning>(
+export async function postOppdrag(
+	xml: string,
+): Promise<Beregningspresentasjon> {
+	return await axiosPostFetcher<string, Beregningspresentasjon>(
 		BASE_URI.BACKEND_API,
-		"/beregning/1/oppdrag",
+		"/beregning/2/oppdrag",
 		xml,
 		{
 			headers: {
@@ -36,7 +39,7 @@ export async function testCalculation(
 ): Promise<Beregning> {
 	return await axiosPostFetcher<string, Beregning>(
 		BASE_URI.BACKEND_API,
-		"/beregning/1/test",
+		"/beregning/2/test",
 		JSON.stringify(beregning),
 		{
 			headers: {
@@ -50,20 +53,20 @@ export async function testCalculation(
 }
 
 export async function postTestOppdrag(
-	setState: Dispatch<SetStateAction<FetchState<Beregning>>>,
+	setState: Dispatch<SetStateAction<FetchState<Beregningspresentasjon>>>,
 	test: Testberegning,
 	range: DateRange | undefined,
 ) {
 	setState({ status: "loading" });
 	try {
 		const responseBody = await testCalculation(test, range);
-		const response = BeregningSchema.safeParse(responseBody);
+		const response = BeregningspresentasjonSchema.safeParse(responseBody);
 		if (!response.success) {
 			// biome-ignore lint/suspicious/noConsole: ignore
 			console.log("Error parsing ", response.error, responseBody);
 			setState({ status: "error", error: "Feil i resultat" });
 		} else {
-			const beregning = BeregningSchema.parse(response.data);
+			const beregning = BeregningspresentasjonSchema.parse(response.data);
 			setState({ status: "success", data: beregning });
 		}
 	} catch (err) {
@@ -72,19 +75,19 @@ export async function postTestOppdrag(
 }
 
 export async function postOppdragXML(
-	setState: Dispatch<SetStateAction<FetchState<Beregning>>>,
+	setState: Dispatch<SetStateAction<FetchState<Beregningspresentasjon>>>,
 	xml: string,
 ) {
 	setState({ status: "loading" });
 	try {
 		const responseBody = await postOppdrag(xml);
-		const response = BeregningSchema.safeParse(responseBody);
+		const response = BeregningspresentasjonSchema.safeParse(responseBody);
 		if (!response.success) {
 			// biome-ignore lint/suspicious/noConsole: ignore
 			console.log("Error parsing ", response.error, responseBody);
 			setState({ status: "error", error: "Feil i resultat" });
 		} else {
-			const beregning = BeregningSchema.parse(response.data);
+			const beregning = BeregningspresentasjonSchema.parse(response.data);
 			setState({ status: "success", data: beregning });
 		}
 	} catch (err) {
