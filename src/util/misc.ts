@@ -1,14 +1,5 @@
 import { useEffect } from "react";
-import type {
-	Beregning,
-	Delperiode,
-	ExtraInfo,
-	OverstyrtSkatteKortExtraInfo,
-	ProsentExtraInfo,
-	Row,
-	TabellExtraInfo,
-} from "../types/Beregning";
-import { ExtraInfoTypes } from "../types/schema/ExtraInfoSchema";
+import type { Beregning, Delperiode, ExtraInfo, Row } from "../types/Beregning";
 
 export const sum = (arr: number[]) => arr.reduce((a, b) => a + b, 0);
 
@@ -35,24 +26,6 @@ export function generateCsvDelperiode(calc: Delperiode): string {
 	function formatMetaData(info: ExtraInfo | object) {
 		const extraInfo = info as ExtraInfo;
 		switch (extraInfo.type) {
-			case ExtraInfoTypes.OverstyrtSkatteKort: {
-				const o = info as OverstyrtSkatteKortExtraInfo;
-				return csvEscape(
-					`Overstyrt skattekort. Grunnlag: ${o.grunnlag}, Prosentsats: ${o.prosentSats}, grunn: ${o.grunn}`,
-				);
-			}
-			case ExtraInfoTypes.ProsentExtraInfo: {
-				const p = info as ProsentExtraInfo;
-				return csvEscape(
-					`Prosenttrekk. Grunnlag: ${p.grunnlag}, Prosentsats: ${p.skatteInfo.prosentSats}`,
-				);
-			}
-			case ExtraInfoTypes.TabellExtraInfo: {
-				const t = info as TabellExtraInfo;
-				return csvEscape(
-					`Tabelltrekk Grunnlag: ${t.grunnlag}, Tabell: ${t.skatteInfo.trekktabell}, Inntektsår: ${t.skatteInfo.inntektsAar}, SkattekortID: ${t.skatteInfo.skattekortIdentifikator}, skattekortdato: ${t.skatteInfo.utstedtDato}, Skattedager: ${t.skatteDager}`,
-				);
-			}
 			default:
 				return csvEscape(`Ukjent ekstra-info: ${JSON.stringify(info)}`);
 		}
