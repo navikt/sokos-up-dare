@@ -25,10 +25,10 @@ import React, { startTransition, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router";
 import { postOppdragXML } from "../api/apiService";
 import Backbutton from "../components/Backbutton";
-import BeregningsTabell from "../components/BeregningsTabell";
+import { Beregningskontekst } from "../components/Beregningskontekst";
 import DynamicForm from "../components/DynamicForm";
 import { oppdragsXmlTypedTemplate } from "../data/oppdragsXmlTypedTemplate";
-import type { Beregning } from "../types/Beregning";
+import type { Beregningspresentasjon } from "../types/Beregning";
 import type { FetchState } from "../types/FetchState";
 import { fillTypedTemplate, templateFields } from "../util/template";
 import { useCompressedQueryStateSync } from "../util/useCompressedQueryStateSync";
@@ -51,7 +51,9 @@ const labels: Record<string, string> = {
 export const OppdragsBygger = () => {
 	const location = useLocation();
 	const modalRef = useRef<HTMLDialogElement>(null);
-	const [state, setState] = useState<FetchState<Beregning>>({ status: "idle" });
+	const [state, setState] = useState<FetchState<Beregningspresentasjon>>({
+		status: "idle",
+	});
 	const [copying, setCopying] = useState<boolean>(false);
 	const [modalContent, setModalContent] = useState<string>("");
 	const [showCapacity, setShowCapacity] = useState<boolean>(false);
@@ -259,8 +261,8 @@ export const OppdragsBygger = () => {
 						<Alert variant={"error"}> Noe gikk galt: {state.error} </Alert>
 					)}
 					{state.status === "success" && (
-						<BeregningsTabell
-							beregning={state.data}
+						<Beregningskontekst
+							beregningspresentasjon={state.data}
 							showCapacity={showCapacity}
 						/>
 					)}

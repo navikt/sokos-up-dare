@@ -19,7 +19,7 @@ export const DatoIntervallSchema = z.object({
 	tom: z.string().optional(),
 });
 
-export const DelperiodeSchema = z.object({
+export const DelberegningSchema = z.object({
 	columns: z.array(z.string()),
 	rows: z.array(RowSchema),
 	datoIntervall: DatoIntervallSchema,
@@ -32,6 +32,7 @@ export const DelperiodeSchema = z.object({
 
 export const BeregningSchema = z.object({
 	periode: DatoIntervallSchema,
+	delberegninger: z.array(DelberegningSchema),
 	gjelder: z.number(),
 	fagomraade: z.string(),
 	fagsystem: z.string().optional(),
@@ -42,10 +43,30 @@ export const BeregningSchema = z.object({
 	oppdrag: z.number().optional(),
 	utbetalesTil: z.number().optional(),
 	refunderesTil: z.number().optional(),
-	delperioder: z.array(DelperiodeSchema),
 	beloepTilUtbetaling: z.number(),
 	beregnet: z.string(),
 	id: z.number().optional(),
+});
+
+export const SatsBoetteSchema = z.object({
+	trekkperiodeId: z.number(),
+	boette: z.string(),
+	restSats: z.number(),
+});
+
+export const SaldoBoetteSchema = z.object({
+	trekkperiodeId: z.number(),
+	boette: z.string(),
+	restSaldo: z.number(),
+});
+
+export const BeregningspresentasjonSchema = z.object({
+	periode: DatoIntervallSchema,
+	beregninger: z.array(BeregningSchema),
+	saldoBoetter: z.array(SaldoBoetteSchema),
+	satsBoetter: z.array(SatsBoetteSchema),
+	initielleSaldoBoetter: z.array(SaldoBoetteSchema),
+	initielleSatsBoetter: z.array(SatsBoetteSchema),
 });
 
 export const BeregningListSchema = z.array(BeregningSchema);

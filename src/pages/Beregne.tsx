@@ -17,16 +17,18 @@ import {
 import React, { startTransition, useState } from "react";
 import { postTestOppdrag } from "../api/apiService";
 import Backbutton from "../components/Backbutton";
-import BeregningsTabell from "../components/BeregningsTabell";
+import { Beregningskontekst } from "../components/Beregningskontekst";
 import { exampleXml } from "../data/exampleXml";
-import type { Beregning } from "../types/Beregning";
+import type { Beregningspresentasjon } from "../types/Beregning";
 import type { FetchState } from "../types/FetchState";
 import type { Testberegning } from "../types/Testberegning";
 import styles from "./TemplatePage.module.css";
 
 export default function Beregne() {
 	const [textAreaData, setTextArea] = useState<string>(exampleXml);
-	const [state, setState] = useState<FetchState<Beregning>>({ status: "idle" });
+	const [state, setState] = useState<FetchState<Beregningspresentasjon>>({
+		status: "idle",
+	});
 	const { datepickerProps, toInputProps, fromInputProps, selectedRange } =
 		useRangeDatepicker({
 			defaultSelected: {
@@ -122,7 +124,7 @@ export default function Beregne() {
 				<Alert variant={"error"}> Noe gikk galt: {state.error} </Alert>
 			)}
 			{state.status === "success" && (
-				<BeregningsTabell beregning={state.data} />
+				<Beregningskontekst beregningspresentasjon={state.data} />
 			)}
 
 			<Box>

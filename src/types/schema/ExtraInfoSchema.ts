@@ -12,8 +12,8 @@ export const ExtraInfoValueSchema = z.object({
 export const TekstExtraInfoSchema = z.object({
 	type: z.literal(ExtraInfoTypes.TekstExtraInfo),
 	grunn: z.string(),
-	tekst: z.string(),
-	verdier: z.record(z.string(), ExtraInfoValueSchema),
+	tekst: z.string().optional(),
+	verdier: z.record(z.string(), ExtraInfoValueSchema).optional(),
 });
 
 export const ExtraInfoSchema = z.discriminatedUnion("type", [

@@ -1,8 +1,9 @@
 import type { z } from "zod";
 import type {
 	BeregningSchema,
+	BeregningspresentasjonSchema,
 	CapacitySchema,
-	DelperiodeSchema,
+	DelberegningSchema,
 	RowSchema,
 } from "./schema/BeregningSchema";
 import type {
@@ -10,8 +11,11 @@ import type {
 	ExtraInfoValueSchema,
 } from "./schema/ExtraInfoSchema";
 
+export type Beregningspresentasjon = z.infer<
+	typeof BeregningspresentasjonSchema
+>;
 export type Beregning = z.infer<typeof BeregningSchema>;
-export type Delperiode = z.infer<typeof DelperiodeSchema>;
+export type Delberegning = z.infer<typeof DelberegningSchema>;
 
 export type Capacity = z.infer<typeof CapacitySchema>;
 
