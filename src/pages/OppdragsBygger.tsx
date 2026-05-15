@@ -190,7 +190,8 @@ export const OppdragsBygger = () => {
 							Vis detaljert kapasitet
 						</Switch>
 						<Button
-							variant="secondary-neutral"
+							data-color="neutral"
+							variant="secondary"
 							disabled={state.status === "loading"}
 							onClick={() => {
 								setModalContent(filledTemplate());
@@ -200,7 +201,8 @@ export const OppdragsBygger = () => {
 							Vis XML
 						</Button>
 						<Button
-							variant={"secondary-neutral"}
+							data-color="neutral"
+							variant={"secondary"}
 							onClick={() => {
 								const xml = filledTemplate();
 								const blob = new Blob([xml], { type: "application/xml" });
@@ -215,7 +217,8 @@ export const OppdragsBygger = () => {
 							<DownloadIcon title="Last ned" fontSize="1.5rem" />
 						</Button>
 						<Button
-							variant={"secondary-neutral"}
+							data-color="neutral"
+							variant={"secondary"}
 							onClick={() => {
 								const xml = filledTemplate();
 								navigator.clipboard.writeText(xml);

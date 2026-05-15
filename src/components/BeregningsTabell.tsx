@@ -198,7 +198,8 @@ const BeregningsTabell: React.FC<{
 					</div>
 					<HStack justify={"end"} gap={"2"}>
 						<Button
-							variant={"secondary-neutral"}
+							data-color="neutral"
+							variant={"secondary"}
 							onClick={() => {
 								const csvString = generateCsv(beregning);
 								const blob = new Blob([csvString], {
