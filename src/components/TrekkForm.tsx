@@ -145,8 +145,8 @@ const TrekkListe: React.FC<{
 				as="header"
 				padding="2"
 				borderWidth="1"
-				borderColor={"border-alt-3"}
-				borderRadius={{ md: "large" }}
+				borderColor={"brand-blue"}
+				borderRadius={{ md: "8" }}
 			>
 				<HStack>
 					Trekk ({trekk.length}){" "}

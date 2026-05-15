@@ -165,8 +165,8 @@ export const Oppdrag = () => {
 						as="header"
 						padding="2"
 						borderWidth="1"
-						borderColor={"border-alt-3"}
-						borderRadius={{ md: "large" }}
+						borderColor={"brand-blue"}
+						borderRadius={{ md: "8" }}
 					>
 						<Heading level={"2"} size={"small"}>
 							Skattetrekk
@@ -185,8 +185,8 @@ export const Oppdrag = () => {
 						as="header"
 						padding="2"
 						borderWidth="1"
-						borderColor={"border-alt-3"}
-						borderRadius={{ md: "large" }}
+						borderColor={"brand-blue"}
+						borderRadius={{ md: "8" }}
 					>
 						<TextField
 							type={"number"}
@@ -212,8 +212,8 @@ export const Oppdrag = () => {
 						as="header"
 						padding="2"
 						borderWidth="1"
-						borderColor={"border-alt-3"}
-						borderRadius={{ md: "large" }}
+						borderColor={"brand-blue"}
+						borderRadius={{ md: "8" }}
 					>
 						<Heading level={"2"} size={"small"}>
 							Dato

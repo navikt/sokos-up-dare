@@ -58,8 +58,8 @@ export default function Beregne() {
 			</div>
 			<Box
 				padding="6"
-				borderRadius="xlarge"
-				borderColor="border-subtle"
+				borderRadius="12"
+				borderColor="neutral-subtle"
 				borderWidth="1"
 			>
 				<Accordion>
@@ -126,7 +126,6 @@ export default function Beregne() {
 			{state.status === "success" && (
 				<Beregningskontekst beregningspresentasjon={state.data} />
 			)}
-
 			<Box>
 				Prøv også:{" "}
 				<Link href="/dare/form" className={"dare-link"}>
