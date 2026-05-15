@@ -92,7 +92,7 @@ export const OppdragsBygger = () => {
 			<Backbutton />
 			<div className={styles["template-header"]}>
 				<Heading spacing level="1" size="large">
-					<HStack justify={"center"} align={"center"} gap={"1"}>
+					<HStack justify={"center"} align={"center"} gap={"space-1"}>
 						Oppdragsbygger
 						<WrenchIcon
 							id="wrenchIcon"
@@ -117,7 +117,7 @@ export const OppdragsBygger = () => {
 					<Accordion.Header>Oppdrag</Accordion.Header>
 					<Accordion.Content>
 						<VStack>
-							<Box padding="6">
+							<Box padding="space-6">
 								<Textarea
 									label="XML"
 									resize
@@ -145,11 +145,11 @@ export const OppdragsBygger = () => {
 				getLabel={(name) => labels[name] ?? name}
 			/>
 
-			<VStack gap="2"></VStack>
-			<VStack gap={"4"}>
+			<VStack gap="space-2"></VStack>
+			<VStack gap="space-4">
 				<Box />
 				<HStack justify={"space-between"}>
-					<HStack gap="2" className={"knapperad"}>
+					<HStack gap="space-2" className={"knapperad"}>
 						<Button
 							variant="primary"
 							disabled={state.status === "loading"}
@@ -181,7 +181,7 @@ export const OppdragsBygger = () => {
 							Nullstill templat
 						</Button>
 					</HStack>
-					<HStack gap={"2"}>
+					<HStack gap="space-2">
 						<Switch
 							checked={showCapacity}
 							position={"left"}
@@ -190,7 +190,8 @@ export const OppdragsBygger = () => {
 							Vis detaljert kapasitet
 						</Switch>
 						<Button
-							variant="secondary-neutral"
+							data-color="neutral"
+							variant="secondary"
 							disabled={state.status === "loading"}
 							onClick={() => {
 								setModalContent(filledTemplate());
@@ -200,7 +201,8 @@ export const OppdragsBygger = () => {
 							Vis XML
 						</Button>
 						<Button
-							variant={"secondary-neutral"}
+							data-color="neutral"
+							variant={"secondary"}
 							onClick={() => {
 								const xml = filledTemplate();
 								const blob = new Blob([xml], { type: "application/xml" });
@@ -215,7 +217,8 @@ export const OppdragsBygger = () => {
 							<DownloadIcon title="Last ned" fontSize="1.5rem" />
 						</Button>
 						<Button
-							variant={"secondary-neutral"}
+							data-color="neutral"
+							variant={"secondary"}
 							onClick={() => {
 								const xml = filledTemplate();
 								navigator.clipboard.writeText(xml);

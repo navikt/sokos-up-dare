@@ -1,0 +1,8 @@
+.valg {
+	height: 100%;
+	background-color: var(--ax-bg-meta-lime-soft);
+}
+
+.valg:hover {
+	background-color: var(--ax-bg-meta-purple-soft);
+}

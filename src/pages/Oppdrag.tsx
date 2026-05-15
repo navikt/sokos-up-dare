@@ -140,7 +140,7 @@ export const Oppdrag = () => {
 			<Backbutton />
 			<div className={styles["template-header"]}>
 				<Heading spacing level="1" size="large">
-					<HStack justify={"center"} align={"center"} gap={"1"}>
+					<HStack justify={"center"} align={"center"} gap={"space-1"}>
 						Oppdragstester
 						<TestFlaskIcon
 							id="testflask"
@@ -159,14 +159,14 @@ export const Oppdrag = () => {
 					</Alert>
 				)}
 			</div>
-			<VStack gap="2">
-				<HStack gap="2">
+			<VStack gap="space-2">
+				<HStack gap="space-2">
 					<Box
 						as="header"
-						padding="2"
+						padding="space-2"
 						borderWidth="1"
-						borderColor={"border-alt-3"}
-						borderRadius={{ md: "large" }}
+						borderColor={"brand-blue"}
+						borderRadius={{ md: "8" }}
 					>
 						<Heading level={"2"} size={"small"}>
 							Skattetrekk
@@ -183,10 +183,10 @@ export const Oppdrag = () => {
 					</Box>
 					<Box
 						as="header"
-						padding="2"
+						padding="space-2"
 						borderWidth="1"
-						borderColor={"border-alt-3"}
-						borderRadius={{ md: "large" }}
+						borderColor={"brand-blue"}
+						borderRadius={{ md: "8" }}
 					>
 						<TextField
 							type={"number"}
@@ -210,10 +210,10 @@ export const Oppdrag = () => {
 					</Box>
 					<Box
 						as="header"
-						padding="2"
+						padding="space-2"
 						borderWidth="1"
-						borderColor={"border-alt-3"}
-						borderRadius={{ md: "large" }}
+						borderColor={"brand-blue"}
+						borderRadius={{ md: "8" }}
 					>
 						<Heading level={"2"} size={"small"}>
 							Dato
@@ -238,9 +238,9 @@ export const Oppdrag = () => {
 					</Box>
 				</HStack>
 			</VStack>
-			<VStack gap={"4"}>
+			<VStack gap={"space-4"}>
 				<Box />
-				<HStack gap="2" className={"knapperad"}>
+				<HStack gap="space-2" className={"knapperad"}>
 					<Button
 						variant={"secondary"}
 						onClick={() => {
@@ -263,7 +263,7 @@ export const Oppdrag = () => {
 					}
 				/>
 				<HStack justify={"space-between"}>
-					<HStack gap="2" className={"knapperad"}>
+					<HStack gap="space-2" className={"knapperad"}>
 						<Button
 							variant="primary"
 							disabled={state.status === "loading"}
@@ -283,7 +283,7 @@ export const Oppdrag = () => {
 							Nullstill
 						</Button>
 					</HStack>
-					<HStack gap={"2"}>
+					<HStack gap={"space-2"}>
 						<Switch
 							checked={showCapacity}
 							position={"left"}
@@ -292,7 +292,8 @@ export const Oppdrag = () => {
 							Vis detaljert kapasitet
 						</Switch>
 						<Button
-							variant="secondary-neutral"
+							data-color="neutral"
+							variant="secondary"
 							disabled={state.status === "loading"}
 							onClick={() => {
 								setModalContent(filledTemplate());
@@ -302,7 +303,8 @@ export const Oppdrag = () => {
 							Vis XML
 						</Button>
 						<Button
-							variant={"secondary-neutral"}
+							data-color="neutral"
+							variant={"secondary"}
 							onClick={() => {
 								const xml = filledTemplate();
 								const blob = new Blob([xml], { type: "application/xml" });
@@ -317,7 +319,8 @@ export const Oppdrag = () => {
 							<DownloadIcon title="Last ned" fontSize="1.5rem" />
 						</Button>
 						<Button
-							variant={"secondary-neutral"}
+							data-color="neutral"
+							variant={"secondary"}
 							onClick={() => {
 								const xml = filledTemplate();
 								navigator.clipboard.writeText(xml);

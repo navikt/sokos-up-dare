@@ -24,7 +24,7 @@ const SkattekortForm: React.FC<Props> = ({ skattekort, update }) => {
 	};
 
 	return (
-		<HStack gap={"10"} justify={"space-between"} align={"start"}>
+		<HStack gap={"space-8"} justify={"space-between"} align={"start"}>
 			<RadioGroup
 				legend="Trekktype"
 				value={skattekort.skattetrekkType}

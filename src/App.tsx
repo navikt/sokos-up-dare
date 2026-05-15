@@ -7,6 +7,7 @@ import { Oppdrag } from "./pages/Oppdrag";
 import { OppdragsBygger } from "./pages/OppdragsBygger";
 import Poc from "./pages/Poc";
 import { initGrafanaFaro } from "./util/grafanaFaro";
+import "@navikt/ds-css";
 
 export default function App() {
 	useEffect(() => {

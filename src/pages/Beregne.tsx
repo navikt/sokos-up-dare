@@ -57,9 +57,9 @@ export default function Beregne() {
 				<BodyLong>Utkast for beregningsgrunnlag for AAP</BodyLong>
 			</div>
 			<Box
-				padding="6"
-				borderRadius="xlarge"
-				borderColor="border-subtle"
+				padding="space-6"
+				borderRadius="12"
+				borderColor="neutral-subtle"
 				borderWidth="1"
 			>
 				<Accordion>
@@ -67,7 +67,7 @@ export default function Beregne() {
 						<Accordion.Header>Oppdrag</Accordion.Header>
 						<Accordion.Content>
 							<VStack>
-								<Box padding="6">
+								<Box padding="space-6">
 									<Textarea
 										label="XML"
 										resize
@@ -80,12 +80,12 @@ export default function Beregne() {
 					</Accordion.Item>
 				</Accordion>
 
-				<Box padding="2">
-					<HStack gap={"4"}>
-						<VStack padding={"1"}>
+				<Box padding="space-2">
+					<HStack gap={"space-4"}>
+						<VStack padding={"space-1"}>
 							<Heading size={"small"}>Beregningsperiode:</Heading>
 							<DatePicker {...datepickerProps}>
-								<HStack wrap gap="4" justify="center">
+								<HStack wrap gap="space-4" justify="center">
 									<DatePicker.Input
 										{...fromInputProps}
 										label="Fra"
@@ -126,7 +126,6 @@ export default function Beregne() {
 			{state.status === "success" && (
 				<Beregningskontekst beregningspresentasjon={state.data} />
 			)}
-
 			<Box>
 				Prøv også:{" "}
 				<Link href="/dare/form" className={"dare-link"}>
