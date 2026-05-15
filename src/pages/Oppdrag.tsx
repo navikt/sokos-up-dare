@@ -140,7 +140,7 @@ export const Oppdrag = () => {
 			<Backbutton />
 			<div className={styles["template-header"]}>
 				<Heading spacing level="1" size="large">
-					<HStack justify={"center"} align={"center"} gap={"1"}>
+					<HStack justify={"center"} align={"center"} gap={"space-1"}>
 						Oppdragstester
 						<TestFlaskIcon
 							id="testflask"
@@ -159,11 +159,11 @@ export const Oppdrag = () => {
 					</Alert>
 				)}
 			</div>
-			<VStack gap="2">
-				<HStack gap="2">
+			<VStack gap="space-2">
+				<HStack gap="space-2">
 					<Box
 						as="header"
-						padding="2"
+						padding="space-2"
 						borderWidth="1"
 						borderColor={"brand-blue"}
 						borderRadius={{ md: "8" }}
@@ -183,7 +183,7 @@ export const Oppdrag = () => {
 					</Box>
 					<Box
 						as="header"
-						padding="2"
+						padding="space-2"
 						borderWidth="1"
 						borderColor={"brand-blue"}
 						borderRadius={{ md: "8" }}
@@ -210,7 +210,7 @@ export const Oppdrag = () => {
 					</Box>
 					<Box
 						as="header"
-						padding="2"
+						padding="space-2"
 						borderWidth="1"
 						borderColor={"brand-blue"}
 						borderRadius={{ md: "8" }}
@@ -238,9 +238,9 @@ export const Oppdrag = () => {
 					</Box>
 				</HStack>
 			</VStack>
-			<VStack gap={"4"}>
+			<VStack gap={"space-4"}>
 				<Box />
-				<HStack gap="2" className={"knapperad"}>
+				<HStack gap="space-2" className={"knapperad"}>
 					<Button
 						variant={"secondary"}
 						onClick={() => {
@@ -263,7 +263,7 @@ export const Oppdrag = () => {
 					}
 				/>
 				<HStack justify={"space-between"}>
-					<HStack gap="2" className={"knapperad"}>
+					<HStack gap="space-2" className={"knapperad"}>
 						<Button
 							variant="primary"
 							disabled={state.status === "loading"}
@@ -283,7 +283,7 @@ export const Oppdrag = () => {
 							Nullstill
 						</Button>
 					</HStack>
-					<HStack gap={"2"}>
+					<HStack gap={"space-2"}>
 						<Switch
 							checked={showCapacity}
 							position={"left"}

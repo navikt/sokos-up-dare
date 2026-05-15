@@ -17,7 +17,7 @@ const DynamicForm: React.FC<Props> = ({
 	getLabel,
 }) => {
 	return (
-		<HStack gap="4" wrap>
+		<HStack gap="space-4" wrap>
 			{fields.map((field) => {
 				const value = values[field.name] ?? field.value;
 

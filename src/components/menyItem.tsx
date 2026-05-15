@@ -1,4 +1,5 @@
 import { Box, LinkCard } from "@navikt/ds-react";
+import linkCardStyles from "./LinkCard.module.css";
 
 type MenyItemProps = {
 	path: string;
@@ -9,7 +10,7 @@ type MenyItemProps = {
 
 export function MenyItem({ path, linkText, description, icon }: MenyItemProps) {
 	return (
-		<LinkCard>
+		<LinkCard className={`${linkCardStyles.valg}`}>
 			<Box
 				asChild
 				borderRadius="12"

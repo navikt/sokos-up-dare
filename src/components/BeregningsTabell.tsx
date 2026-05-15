@@ -67,8 +67,8 @@ const BeregningsTabell: React.FC<{
 }> = ({ beregning, showCapacity }) => {
 	return (
 		beregning && (
-			<Box padding={{ xs: "2", md: "6" }}>
-				<VStack gap={"4"}>
+			<Box padding={{ xs: "space-2", md: "space-6" }}>
+				<VStack gap={"space-4"}>
 					<div style={{ overflowX: "auto", width: "100%" }}>
 						<Table
 							id="beregningstabell"
@@ -196,7 +196,7 @@ const BeregningsTabell: React.FC<{
 							</Table.Body>
 						</Table>
 					</div>
-					<HStack justify={"end"} gap={"2"}>
+					<HStack justify={"end"} gap={"space-2"}>
 						<Button
 							data-color="neutral"
 							variant={"secondary"}

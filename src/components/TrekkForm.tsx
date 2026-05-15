@@ -143,7 +143,7 @@ const TrekkListe: React.FC<{
 		trekk.length > 0 && (
 			<Box
 				as="header"
-				padding="2"
+				padding="space-2"
 				borderWidth="1"
 				borderColor={"brand-blue"}
 				borderRadius={{ md: "8" }}

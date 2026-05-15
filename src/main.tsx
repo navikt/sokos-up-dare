@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import "./index.css";
+import "@navikt/ds-css/dist/index.css";
 
 const startMsw = async () => {
 	if (import.meta.env.MODE === "mock") {

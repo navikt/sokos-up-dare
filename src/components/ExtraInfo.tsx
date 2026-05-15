@@ -28,7 +28,7 @@ const KeyValTableRow: React.FC<{
 
 const ExtraInfoTable: React.FC<{ info: ExtraInfo }> = ({ info }) => {
 	return (
-		<VStack gap="2">
+		<VStack gap="space-2">
 			<Heading level="2" size="small">
 				{label(info.grunn)}
 			</Heading>
@@ -53,7 +53,7 @@ export const ExtraInfoIcon: React.FC<{ data: ExtraInfo[] }> = ({ data }) => {
 
 	return (
 		<HelpText title="info">
-			<VStack gap="6">
+			<VStack gap="space-6">
 				{data.map((info) => (
 					<ExtraInfoTable
 						key={`${info.type}-${info.grunn}-${info.tekst}`}
