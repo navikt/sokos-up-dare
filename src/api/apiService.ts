@@ -1,6 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
 import type { Beregning, Beregningspresentasjon } from "../types/Beregning";
-import type { DateRange } from "../types/DateRange";
 import type { FetchState } from "../types/FetchState";
 import {
 	BeregningListSchema,
@@ -8,7 +7,6 @@ import {
 	BeregningspresentasjonSchema,
 } from "../types/schema/BeregningSchema";
 import type { Testberegning } from "../types/Testberegning";
-import formatDate from "../util/date";
 import { axiosFetcher, axiosPostFetcher } from "./config/apiConfig";
 
 const BASE_URI = {
@@ -35,7 +33,6 @@ export async function postOppdrag(
 
 export async function testCalculation(
 	beregning: Testberegning,
-	range?: DateRange,
 ): Promise<Beregning> {
 	return await axiosPostFetcher<string, Beregning>(
 		BASE_URI.BACKEND_API,
@@ -43,10 +40,8 @@ export async function testCalculation(
 		JSON.stringify(beregning),
 		{
 			headers: {
-				"Content-Type": "text/xml",
+				"Content-Type": "application/json",
 				"Accept-Language": locale,
-				...(range?.from && { "X-dateRange-from": formatDate(range.from) }),
-				...(range?.to && { "X-dateRange-to": formatDate(range.to) }),
 			},
 		},
 	);
@@ -55,11 +50,10 @@ export async function testCalculation(
 export async function postTestOppdrag(
 	setState: Dispatch<SetStateAction<FetchState<Beregningspresentasjon>>>,
 	test: Testberegning,
-	range: DateRange | undefined,
 ) {
 	setState({ status: "loading" });
 	try {
-		const responseBody = await testCalculation(test, range);
+		const responseBody = await testCalculation(test);
 		const response = BeregningspresentasjonSchema.safeParse(responseBody);
 		if (!response.success) {
 			// biome-ignore lint/suspicious/noConsole: ignore

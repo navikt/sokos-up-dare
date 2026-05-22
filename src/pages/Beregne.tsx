@@ -22,6 +22,7 @@ import { exampleXml } from "../data/exampleXml";
 import type { Beregningspresentasjon } from "../types/Beregning";
 import type { FetchState } from "../types/FetchState";
 import type { Testberegning } from "../types/Testberegning";
+import formatDate from "../util/date";
 import styles from "./TemplatePage.module.css";
 
 export default function Beregne() {
@@ -43,8 +44,10 @@ export default function Beregne() {
 			oppdragsXml: xmlData,
 			skattetrekkType: "prosenttrekk",
 			prosentSats: "50",
+			datoFom: formatDate(selectedRange?.from) ?? "",
+			datoTom: formatDate(selectedRange?.to) ?? "",
 		};
-		postTestOppdrag(setState, testOppdrag, selectedRange);
+		postTestOppdrag(setState, testOppdrag);
 	};
 
 	return (
