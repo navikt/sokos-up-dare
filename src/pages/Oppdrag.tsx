@@ -20,7 +20,7 @@ import {
 	VStack,
 } from "@navikt/ds-react";
 import { decompressFromEncodedURIComponent } from "lz-string";
-import React, { startTransition, useRef, useState } from "react";
+import { startTransition, useRef, useState } from "react";
 import { useLocation } from "react-router";
 import { postTestOppdrag } from "../api/apiService";
 import Backbutton from "../components/Backbutton";
@@ -30,7 +30,6 @@ import SkattekortForm from "../components/SkattekortForm";
 import TrekkListe, { nyttTrekk } from "../components/TrekkForm";
 import { oppdragsXmlTemplate } from "../data/oppdragsXmlTemplate";
 import type { Beregningspresentasjon } from "../types/Beregning";
-import type { DateRange } from "../types/DateRange";
 import type { FetchState } from "../types/FetchState";
 import type {
 	FormVersion,
@@ -77,13 +76,11 @@ export const Oppdrag = () => {
 			oppdragsXmlVersjon: "2.5",
 			oppdragsXml: oppdragsXml,
 			...formData.skattekort,
+			datoFom: formData.datoVedtakFom,
+			datoTom: formData.datoVedtakTom,
 			trekk: formData.trekk,
 		};
-		const range: DateRange = {
-			from: new Date(formData.datoVedtakFom),
-			to: new Date(formData.datoVedtakTom),
-		};
-		postTestOppdrag(setState, testberegning, range);
+		postTestOppdrag(setState, testberegning);
 	};
 
 	const [formData, setFormData] = useState<Oppdragsbeskrivelse & FormVersion>(
